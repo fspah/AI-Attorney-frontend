@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { BeatLoader } from 'react-spinners';
 
 function App() {
   const [file, setFile] = useState(null);
@@ -62,15 +63,24 @@ function App() {
         </label>
         <label htmlFor="question">
           Question:
-          <input
-            type="text"
+          <textarea
             value={question}
             onChange={handleQuestionChange}
             required
-            style={{ margin: '10px 0', padding: '5px' }}
+            rows={5}
+            style={{
+              margin: '10px 0',
+              padding: '10px',
+              width: '100%',
+              borderRadius: '5px',
+              border: '1px solid #ccc',
+              fontSize: '16px',
+              resize: 'vertical',
+            }}
             id="question"
           />
         </label>
+
         <label htmlFor="location">
           Location:
           <input
@@ -96,11 +106,17 @@ function App() {
           }}
         />
       </form>
-      {isLoading && file && (
-        <p style={{ textAlign: 'center', marginTop: '10px', color: '#999' }}>
-          Processing... This may take several minutes depending on the document size.
-        </p>
+      {isLoading && (
+        <div style={{ textAlign: 'center', marginTop: '10px', color: '#999' }}>
+          <p>
+            {file
+              ? 'Processing... This may take several minutes depending on the document size.'
+              : 'Processing your request...'}
+          </p>
+          <BeatLoader color="#007BFF" />
+        </div>
       )}
+
       {answer && (
         <p
           style={{
