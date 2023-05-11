@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { BeatLoader } from 'react-spinners';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 function App() {
   const [file, setFile] = useState(null);
@@ -8,6 +9,7 @@ function App() {
   const [location, setLocation] = useState('');
   const [answer, setAnswer] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [progress, setProgress] = useState(0);  // Add a state variable for progress
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -33,6 +35,19 @@ function App() {
     try {
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/process-pdf`, formData);
       setAnswer(response.data.answer);
+      const fileSizeKb = response.data.file_size_kb;  // Get the file size from the response
+      const estimatedTime = (fileSizeKb / 1024) * 90;  // 1 MB is approx. 90 seconds
+      // Set an interval to update the progress bar
+      const interval = setInterval(() => {
+        setProgress((oldProgress) => {
+          if (oldProgress === 100) {
+            clearInterval(interval);
+            return 100;
+          }
+          const newProgress = oldProgress + 100 / estimatedTime;
+          return Math.min(newProgress, 100);
+        });
+      }, 1000);
     } catch (error) {
       // console.error(error);
     } finally {
@@ -105,7 +120,7 @@ function App() {
             cursor: 'pointer',
           }}
         />
-      </form>
+       </form>
       {isLoading && (
         <div style={{ textAlign: 'center', marginTop: '10px', color: '#999' }}>
           <p>
@@ -113,7 +128,7 @@ function App() {
               ? 'Processing... This may take several minutes depending on the document size.'
               : 'Processing your request...'}
           </p>
-          <BeatLoader color="#007BFF" />
+          <LinearProgress variant="determinate" value={progress} />  {/* Show progress bar */}
         </div>
       )}
 
@@ -134,3 +149,4 @@ function App() {
 }
 
 export default App;
+
