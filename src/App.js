@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { BeatLoader } from 'react-spinners';
-import LinearProgress from '@material-ui/core/LinearProgress';
 
 function App() {
   const [file, setFile] = useState(null);
@@ -131,15 +130,7 @@ function App() {
       {isLoading && file && (
         <div style={{ textAlign: 'center', marginTop: '10px', color: '#999' }}>
           <p>Processing... This may take several minutes depending on the document size.</p>
-          <LinearProgress
-            variant="determinate"
-            value={progress}
-            style={{
-              height: '20px', // Change the height of the progress bar
-              margin: '20px 0', // Add some margin
-              backgroundColor: '#ddd', // Change the background color
-            }}
-          />
+          <progress value={progress} max="100" style={{ width: '100%', height: '20px' }} />
         </div>
       )}
 
