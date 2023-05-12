@@ -35,23 +35,28 @@ function App() {
     try {
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/process-pdf`, formData);
       setAnswer(response.data.answer);
-      const fileSizeKb = response.data.file_size_kb; // Get the file size from the response
-      const estimatedTime = (fileSizeKb / 1024) * 90; // 1 MB is approx. 90 seconds
-      // Set an interval to update the progress bar
-      const interval = setInterval(() => {
-        setProgress((oldProgress) => {
-          if (oldProgress === 100) {
-            clearInterval(interval);
-            return 100;
-          }
-          const newProgress = oldProgress + 100 / estimatedTime;
-          return Math.min(newProgress, 100);
-        });
-      }, 1000);
+      if (file) { // Only setup the progress interval when there's a file
+        const fileSizeKb = response.data.file_size_kb; // Get the file size from the response
+        const estimatedTime = (fileSizeKb / 1024) * 90; // 1 MB is approx. 90 seconds
+        // Set an interval to update the progress bar
+        const interval = setInterval(() => {
+          setProgress((oldProgress) => {
+            if (oldProgress >= 100) {
+              clearInterval(interval);
+              setIsLoading(false); // set loading to false when progress is complete
+              return 100;
+            }
+            const newProgress = oldProgress + 100 / estimatedTime;
+            return Math.min(newProgress, 100);
+          });
+        }, 1000);
+      } else {
+        // If there's no file, just stop loading after the request is complete
+        setIsLoading(false);
+      }
     } catch (error) {
       // console.error(error);
-    } finally {
-      setIsLoading(false);
+      setIsLoading(false); // make sure to set loading to false in case of an error
     }
   };
 
@@ -137,7 +142,7 @@ function App() {
             style={{
               width: '25%',
               appearance: 'none',
-              height: '75px',
+              height: '50px',
               color: '#007BFF', // Change color to your preference
             }}
           />
