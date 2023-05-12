@@ -34,7 +34,7 @@ function App() {
 
     let interval;
     if (file) { // Only setup the progress interval when there's a file
-      const estimatedTime = (fileSizeKb / 1024) * 90; // 1 MB is approx. 90 seconds
+      const estimatedTime = (fileSizeKb / 1024) * 100; // 1 MB is approx. 90 seconds
       // Set an interval to update the progress bar
       interval = setInterval(() => {
         setProgress((oldProgress) => {
@@ -63,7 +63,7 @@ function App() {
       clearInterval(interval);
       setIsLoading(false);
     } catch (error) {
-      // console.error(error);
+      console.error(error);
       setIsLoading(false); // make sure to set loading to false in case of an error
       clearInterval(interval); // also clear the interval in case of an error
     }
