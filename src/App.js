@@ -5,6 +5,7 @@ import './App.css';
 
 function App() {
   const [file, setFile] = useState(null);
+  const [fileSizeKb, setFileSizeKb] = useState(0);
   const [question, setQuestion] = useState('');
   const [location, setLocation] = useState('');
   const [answer, setAnswer] = useState('');
@@ -12,7 +13,10 @@ function App() {
   const [progress, setProgress] = useState(0);
 
   const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
+    const file = event.target.files[0];
+    setFile(file);
+    const fileSizeInKb = file.size / 1024; // Get the file size in kilobytes
+    setFileSizeKb(fileSizeInKb); // Store the file size in state
   };
 
   const handleQuestionChange = (event) => {
@@ -36,20 +40,19 @@ function App() {
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/process-pdf`, formData);
       setAnswer(response.data.answer);
       if (file) { // Only setup the progress interval when there's a file
-        const fileSizeKb = response.data.file_size_kb; // Get the file size from the response
         const estimatedTime = (fileSizeKb / 1024) * 90; // 1 MB is approx. 90 seconds
-        // Set an interval to update the progress bar
+      // Set an interval to update the progress bar
         const interval = setInterval(() => {
-          setProgress((oldProgress) => {
-            if (oldProgress >= 100) {
-              clearInterval(interval);
-              setIsLoading(false); // set loading to false when progress is complete
-              return 100;
-            }
-            const newProgress = oldProgress + 100 / estimatedTime;
-            return Math.min(newProgress, 100);
-          });
-        }, 1000);
+        setProgress((oldProgress) => {
+          if (oldProgress >= 100) {
+            clearInterval(interval);
+            setIsLoading(false);
+            return 100;
+          }
+          const newProgress = oldProgress + 100 / estimatedTime;
+          return Math.min(newProgress, 100);
+        });
+      }, 1000);
       } else {
         // If there's no file, just stop loading after the request is complete
         setIsLoading(false);
