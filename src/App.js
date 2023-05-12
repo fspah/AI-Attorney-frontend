@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { BeatLoader } from 'react-spinners';
+import './App.css';
 
 function App() {
   const [file, setFile] = useState(null);
@@ -130,7 +131,16 @@ function App() {
       {isLoading && file && (
         <div style={{ textAlign: 'center', marginTop: '10px', color: '#999' }}>
           <p>Processing... This may take several minutes depending on the document size.</p>
-          <progress value={progress} max="100" style={{ width: '25%', height: '80px' }} />
+          <progress
+            value={progress}
+            max="100"
+            style={{
+              width: '25%',
+              appearance: 'none',
+              height: '75px',
+              color: '#007BFF', // Change color to your preference
+            }}
+          />
         </div>
       )}
 
