@@ -142,7 +142,7 @@ function App() {
         </div>
       )}
 
-      {isLoading && file && (
+      {isLoading && file && !answer && (
         <div style={{ textAlign: 'center', marginTop: '10px', color: '#999' }}>
           <p>Processing... This may take several minutes depending on the document size.</p>
           <progress
