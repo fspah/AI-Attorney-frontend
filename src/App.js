@@ -13,10 +13,10 @@ function App() {
   const [progress, setProgress] = useState(0);
 
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setFile(file);
-    const fileSizeInKb = file.size / 1024; // Get the file size in kilobytes
-    setFileSizeKb(fileSizeInKb); // Store the file size in state
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+    const fileSizeInKb = selectedFile.size / 1024; // Get the file size in kilobytes
+    setFileSizeKb(fileSizeInKb);
   };
 
   const handleQuestionChange = (event) => {
@@ -30,7 +30,7 @@ function App() {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-  
+
     let interval;
     if (file) { // Only setup the progress interval when there's a file
       const estimatedTime = (fileSizeKb / 1024) * 90; // 1 MB is approx. 90 seconds
@@ -47,14 +47,14 @@ function App() {
         });
       }, 1000);
     }
-  
+
     const formData = new FormData();
     if (file) {
       formData.append('file', file);
     }
     formData.append('question', question);
     formData.append('location', location);
-  
+
     try {
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/process-pdf`, formData);
       setAnswer(response.data.answer);
@@ -68,7 +68,6 @@ function App() {
       clearInterval(interval); // also clear the interval in case of an error
     }
   };
-  
 
   return (
     <div className="App" style={{ padding: '10px', fontFamily: 'Arial' }}>
