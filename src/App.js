@@ -30,6 +30,7 @@ function App() {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
+    setAnswer('');
 
     let interval;
     if (file) { // Only setup the progress interval when there's a file
