@@ -131,7 +131,15 @@ function App() {
       {isLoading && file && (
         <div style={{ textAlign: 'center', marginTop: '10px', color: '#999' }}>
           <p>Processing... This may take several minutes depending on the document size.</p>
-          <LinearProgress variant="determinate" value={progress} />
+          <LinearProgress
+            variant="determinate"
+            value={progress}
+            style={{
+              height: '20px', // Change the height of the progress bar
+              margin: '20px 0', // Add some margin
+              backgroundColor: '#ddd', // Change the background color
+            }}
+          />
         </div>
       )}
 
