@@ -130,7 +130,7 @@ function App() {
       {isLoading && file && (
         <div style={{ textAlign: 'center', marginTop: '10px', color: '#999' }}>
           <p>Processing... This may take several minutes depending on the document size.</p>
-          <progress value={progress} max="100" style={{ width: '100%', height: '20px' }} />
+          <progress value={progress} max="100" style={{ width: '25%', height: '80px' }} />
         </div>
       )}
 
