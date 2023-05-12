@@ -39,8 +39,6 @@ function App() {
       interval = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress >= 100) {
-            clearInterval(interval);
-            setIsLoading(false);
             return 100;
           }
           const newProgress = oldProgress + 100 / estimatedTime;
