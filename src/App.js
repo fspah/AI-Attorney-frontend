@@ -30,19 +30,12 @@ function App() {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    const formData = new FormData();
-    if (file) {
-      formData.append('file', file);
-    }
-    formData.append('question', question);
-    formData.append('location', location);
-    try {
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/process-pdf`, formData);
-      setAnswer(response.data.answer);
-      if (file) { // Only setup the progress interval when there's a file
-        const estimatedTime = (fileSizeKb / 1024) * 90; // 1 MB is approx. 90 seconds
+  
+    let interval;
+    if (file) { // Only setup the progress interval when there's a file
+      const estimatedTime = (fileSizeKb / 1024) * 90; // 1 MB is approx. 90 seconds
       // Set an interval to update the progress bar
-        const interval = setInterval(() => {
+      interval = setInterval(() => {
         setProgress((oldProgress) => {
           if (oldProgress >= 100) {
             clearInterval(interval);
@@ -53,15 +46,29 @@ function App() {
           return Math.min(newProgress, 100);
         });
       }, 1000);
-      } else {
+    }
+  
+    const formData = new FormData();
+    if (file) {
+      formData.append('file', file);
+    }
+    formData.append('question', question);
+    formData.append('location', location);
+  
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/process-pdf`, formData);
+      setAnswer(response.data.answer);
+      if (!file) {
         // If there's no file, just stop loading after the request is complete
         setIsLoading(false);
       }
     } catch (error) {
       // console.error(error);
       setIsLoading(false); // make sure to set loading to false in case of an error
+      clearInterval(interval); // also clear the interval in case of an error
     }
   };
+  
 
   return (
     <div className="App" style={{ padding: '10px', fontFamily: 'Arial' }}>
