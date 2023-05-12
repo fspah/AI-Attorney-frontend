@@ -59,7 +59,7 @@ function App() {
     try {
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/process-pdf`, formData);
       setAnswer(response.data.answer);
-      setProgress(0) 
+      setProgress(0);
       if (!file) {
         // If there's no file, just stop loading after the request is complete
         setIsLoading(false);
