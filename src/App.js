@@ -1,11 +1,16 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import UploadPage from './pages/UploadPage';
+import ChatPage from './pages/ChatPage';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
+        <Route path="/" exact component={HomePage} />
+        <Route path="/upload" component={UploadPage} />
+        <Route path="/chat" component={ChatPage} />
       </Routes>
     </Router>
   );
