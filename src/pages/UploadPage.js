@@ -62,7 +62,7 @@ function UploadPage() {
   const handleQuestionSubmit = async (event) => {
     event.preventDefault();
     setIsQuestionLoading(true);
-  
+
     const estimatedTime = (fileSizeKb / 1024) * 20; // 20% of file upload time
     const interval = setInterval(() => {
       setQuestionProgress((oldProgress) => {
@@ -74,11 +74,11 @@ function UploadPage() {
         return Math.min(newProgress, 100);
       });
     }, 1000);
-  
+
     const formData = new FormData();
     formData.append('filename', filename);
     formData.append('question', question);
-  
+
     try {
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/process-pdf`, formData);
       setAnswer(response.data.answer);
@@ -90,7 +90,6 @@ function UploadPage() {
       clearInterval(interval); // also clear the interval in case of an error
     }
   };
-  
 
   return (
   // Remaining JSX
