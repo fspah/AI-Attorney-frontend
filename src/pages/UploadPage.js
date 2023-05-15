@@ -51,6 +51,7 @@ function UploadPage() {
         setFilename(response.data.filename);
         setProgress(0);
         setIsLoading(false);
+        clearInterval(interval);
       } catch (error) {
         console.error(error);
         setIsLoading(false); // make sure to set loading to false in case of an error
