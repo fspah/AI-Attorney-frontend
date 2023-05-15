@@ -15,13 +15,23 @@ function HomePage() {
   };
 
   return (
-    <div style={{textAlign: 'center', fontFamily: 'Arial'}}>
+    <div style={{ textAlign: 'center', fontFamily: 'Arial' }}>
       <h1>AI Attorney</h1>
-      <Link to="/upload" style={buttonStyle} onMouseOver={(e) => e.target.style.backgroundColor = '#0056b3'} onMouseOut={(e) => e.target.style.backgroundColor = '#007BFF'}>
+      <Link
+        to="/upload"
+        style={buttonStyle}
+        onMouseOver={(e) => { e.target.style.backgroundColor = '#0056b3'; }}
+        onMouseOut={(e) => { e.target.style.backgroundColor = '#007BFF'; }}
+      >
         Upload and process a file
       </Link>
       <br />
-      <Link to="/chat" style={buttonStyle} onMouseOver={(e) => e.target.style.backgroundColor = '#0056b3'} onMouseOut={(e) => e.target.style.backgroundColor = '#007BFF'}>
+      <Link
+        to="/chat"
+        style={buttonStyle}
+        onMouseOver={(e) => { e.target.style.backgroundColor = '#0056b3'; }}
+        onMouseOut={(e) => { e.target.style.backgroundColor = '#007BFF'; }}
+      >
         Chat with an AI attorney
       </Link>
     </div>
