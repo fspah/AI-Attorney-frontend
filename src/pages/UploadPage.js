@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { BeatLoader } from 'react-spinners';
 import '../App.css';
 
 function UploadPage() {
@@ -65,7 +64,7 @@ function UploadPage() {
     setIsQuestionLoading(true);
 
     const estimatedTime = (fileSizeKb / 1024) * 20; // 20% of file upload time
-    let interval = setInterval(() => {
+    const interval = setInterval(() => {
       setQuestionProgress((oldProgress) => {
         if (oldProgress >= 100) {
           clearInterval(interval);
@@ -89,135 +88,134 @@ function UploadPage() {
   };
 
   return (
-        // Remaining JSX
-        <div className="App" style={{ padding: '10px', fontFamily: 'Arial' }}>
-        <h1 style={{ textAlign: 'center', color: '#444' }}>AI Attorney</h1>
-        <form
-          onSubmit={handleFileUpload}
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            maxWidth: '300px',
-            margin: 'auto',
-          }}
-        >
-          <label htmlFor="file">
-            PDF (optional):
-            <input
-              type="file"
-              onChange={handleFileChange}
-              style={{ margin: '10px 0' }}
-              id="file"
-            />
-          </label>
-  
+  // Remaining JSX
+    <div className="App" style={{ padding: '10px', fontFamily: 'Arial' }}>
+      <h1 style={{ textAlign: 'center', color: '#444' }}>AI Attorney</h1>
+      <form
+        onSubmit={handleFileUpload}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          maxWidth: '300px',
+          margin: 'auto',
+        }}
+      >
+        <label htmlFor="file">
+          PDF (optional):
           <input
-            type="submit"
-            value="Upload"
-            style={{
-              margin: '20px 0',
-              padding: '10px',
-              background: '#007BFF',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer',
-            }}
+            type="file"
+            onChange={handleFileChange}
+            style={{ margin: '10px 0' }}
+            id="file"
           />
-        </form>
-  
-        {isLoading && (
-          <div style={{ textAlign: 'center', marginTop: '10px', color: '#999' }}>
-            <p>Uploading... This may take several minutes depending on the document size.</p>
-            <progress
-              value={progress}
-              max="100"
-              style={{
-                width: '25%',
-                appearance: 'none',
-                height: '50px',
-                color: '#007BFF', // Change color to your preference
-              }}
-            />
-          </div>
-        )}
-  
-        {filename && !isLoading && (
-          <form
-            onSubmit={handleQuestionSubmit}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              maxWidth: '300px',
-              margin: 'auto',
-            }}
-          >
-            <label htmlFor="question">
-              Question:
-              <textarea
-                value={question}
-                onChange={handleQuestionChange}
-                required
-                rows={5}
-                style={{
-                  margin: '10px 0',
-                  padding: '10px',
-                  width: '100%',
-                  borderRadius: '5px',
-                  border: '1px solid #ccc',
-                  fontSize: '16px',
-                  resize: 'vertical',
-                }}
-                id="question"
-              />
-            </label>
-            <input
-              type="submit"
-              value="Submit Question"
-              style={{
-                margin: '20px 0',
-                padding: '10px',
-                background: '#007BFF',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '5px',
-                cursor: 'pointer',
-              }}
-            />
-          </form>
-        )}
-  
-        {isQuestionLoading && (
-          <div style={{ textAlign: 'center', marginTop: '10px', color: '#999' }}>
-            <p>Processing your question...</p>
-            <progress
-              value={questionProgress}
-              max="100"
-              style={{
-                width: '25%',
-                appearance: 'none',
-                height: '50px',
-                color: '#007BFF', // Change color to your preference
-              }}
-            />
-          </div>
-        )}
-  
-        {answer && (
-          <p
-            style={{
-              marginTop: '20px',
-              border: '1px solid #ddd',
-              padding: '10px',
-              borderRadius: '5px',
-            }}
-          >
-            {`Answer: ${answer}`}
-          </p>
-        )}
+        </label>
+
+        <input
+          type="submit"
+          value="Upload"
+          style={{
+            margin: '20px 0',
+            padding: '10px',
+            background: '#007BFF',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+          }}
+        />
+      </form>
+
+      {isLoading && (
+      <div style={{ textAlign: 'center', marginTop: '10px', color: '#999' }}>
+        <p>Uploading... This may take several minutes depending on the document size.</p>
+        <progress
+          value={progress}
+          max="100"
+          style={{
+            width: '25%',
+            appearance: 'none',
+            height: '50px',
+            color: '#007BFF', // Change color to your preference
+          }}
+        />
       </div>
-    );
-  }
-  
-  export default UploadPage;
-  
+      )}
+
+      {filename && !isLoading && (
+      <form
+        onSubmit={handleQuestionSubmit}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          maxWidth: '300px',
+          margin: 'auto',
+        }}
+      >
+        <label htmlFor="question">
+          Question:
+          <textarea
+            value={question}
+            onChange={handleQuestionChange}
+            required
+            rows={5}
+            style={{
+              margin: '10px 0',
+              padding: '10px',
+              width: '100%',
+              borderRadius: '5px',
+              border: '1px solid #ccc',
+              fontSize: '16px',
+              resize: 'vertical',
+            }}
+            id="question"
+          />
+        </label>
+        <input
+          type="submit"
+          value="Submit Question"
+          style={{
+            margin: '20px 0',
+            padding: '10px',
+            background: '#007BFF',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+          }}
+        />
+      </form>
+      )}
+
+      {isQuestionLoading && (
+      <div style={{ textAlign: 'center', marginTop: '10px', color: '#999' }}>
+        <p>Processing your question...</p>
+        <progress
+          value={questionProgress}
+          max="100"
+          style={{
+            width: '25%',
+            appearance: 'none',
+            height: '50px',
+            color: '#007BFF', // Change color to your preference
+          }}
+        />
+      </div>
+      )}
+
+      {answer && (
+      <p
+        style={{
+          marginTop: '20px',
+          border: '1px solid #ddd',
+          padding: '10px',
+          borderRadius: '5px',
+        }}
+      >
+        {`Answer: ${answer}`}
+      </p>
+      )}
+    </div>
+  );
+}
+
+export default UploadPage;
