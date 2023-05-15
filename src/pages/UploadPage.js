@@ -30,7 +30,7 @@ function UploadPage() {
 
     let interval;
     if (file) { // Only setup the progress interval when there's a file
-      const estimatedTime = (fileSizeKb / 1024) * 100; // 1 MB is approx. 90 seconds
+      const estimatedTime = (fileSizeKb / 1024) * 80; // 1 MB is approx. 90 seconds
       // Set an interval to update the progress bar
       interval = setInterval(() => {
         setProgress((oldProgress) => {
@@ -63,7 +63,7 @@ function UploadPage() {
     event.preventDefault();
     setIsQuestionLoading(true);
 
-    const estimatedTime = (fileSizeKb / 1024) * 20; // 20% of file upload time
+    const estimatedTime = (fileSizeKb / 1024) * 50; // 20% of file upload time
     const interval = setInterval(() => {
       setQuestionProgress((oldProgress) => {
         if (oldProgress >= 100) {
