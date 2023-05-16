@@ -64,7 +64,7 @@ function UploadPage() {
     event.preventDefault();
     setIsQuestionLoading(true);
 
-    const estimatedTime = (fileSizeKb / 1024) * 50; // 20% of file upload time
+    const estimatedTime = 15; 
     const interval = setInterval(() => {
       setQuestionProgress((oldProgress) => {
         if (oldProgress >= 100) {
