@@ -85,6 +85,7 @@ function UploadPage() {
       setAnswer(response.data.answer);
       setQuestionProgress(0);
       setIsQuestionLoading(false);
+      clearInterval(interval);
     } catch (error) {
       console.error(error);
       setIsQuestionLoading(false); // make sure to set loading to false in case of an error
