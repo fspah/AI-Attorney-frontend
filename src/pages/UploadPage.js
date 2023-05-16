@@ -84,8 +84,8 @@ function UploadPage() {
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/process-pdf`, formData);
       setAnswer(response.data.answer);
       setQuestionProgress(0);
-      setIsQuestionLoading(false);
       clearInterval(interval);
+      setIsQuestionLoading(false);
     } catch (error) {
       console.error(error);
       setIsQuestionLoading(false); // make sure to set loading to false in case of an error
