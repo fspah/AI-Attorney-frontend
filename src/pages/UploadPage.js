@@ -64,7 +64,7 @@ function UploadPage() {
     event.preventDefault();
     setIsQuestionLoading(true);
 
-    const estimatedTime = 15; 
+    const estimatedTime = 15;
     const interval = setInterval(() => {
       setQuestionProgress((oldProgress) => {
         if (oldProgress >= 100) {
