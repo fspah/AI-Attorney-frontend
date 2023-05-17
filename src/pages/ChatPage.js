@@ -15,6 +15,7 @@ function ChatPage() {
   const [message, setMessage] = useState('');
   const [chatHistory, setChatHistory] = useState([]);
   const [isSending, setIsSending] = useState(false);
+  const [isFirstQuestion, setIsFirstQuestion] = useState(true);
 
   const handleMessageChange = (event) => {
     setMessage(event.target.value);
@@ -26,9 +27,16 @@ function ChatPage() {
     setChatHistory(tempChatHistory);
     setIsSending(true);
 
+    let messageToSend = message;
+
+    if (isFirstQuestion) {
+      messageToSend = `You are an expert attorney. Give your answer on the following question: ${message}. If the location isn't provided, ask me for the location/jurisdiction.`;
+      setIsFirstQuestion(false);
+    }
+
     try {
       const lastMessages = tempChatHistory.slice(-5); // Get the last 3 messages
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/chat`, { messages: lastMessages });
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/chat`, { messages: [...lastMessages, { role: 'user', content: messageToSend }] });
       setChatHistory((oldChatHistory) => [...oldChatHistory, { role: 'assistant', content: response.data.answer }]);
       setMessage('');
     } catch (error) {
