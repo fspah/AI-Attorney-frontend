@@ -19,7 +19,7 @@ function ChatPage() {
 
   useEffect(() => {
     const systemMessage = {
-      role: 'system',
+      role: 'user',
       content: "You are an expert attorney. If the location isn't provided, ask me for the location/jurisdiction.",
     };
     setChatHistoryForServer([systemMessage]);
