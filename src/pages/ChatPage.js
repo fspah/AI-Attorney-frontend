@@ -14,6 +14,7 @@ function Spinner() {
 function ChatPage() {
   const [message, setMessage] = useState('');
   const [chatHistory, setChatHistory] = useState([]);
+  const [chatHistoryForServer, setChatHistoryForServer] = useState([]);
   const [isSending, setIsSending] = useState(false);
   const [isFirstQuestion, setIsFirstQuestion] = useState(true);
 
@@ -23,21 +24,23 @@ function ChatPage() {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
+    const userMessage = { role: 'user', content: message };
     let messageToSend = message;
 
     if (isFirstQuestion) {
       messageToSend = `You are an expert attorney. Give your answer on the following question: ${message}. If the location isn't provided, ask me for the location/jurisdiction.`;
       setIsFirstQuestion(false);
     }
-    const tempChatHistory = [...chatHistory, { role: 'user', content: messageToSend }];
-    setChatHistory(tempChatHistory);
+
+    setChatHistory((oldChatHistory) => [...oldChatHistory, userMessage]);
+    setChatHistoryForServer((oldChatHistory) => [...oldChatHistory, { role: 'user', content: messageToSend }]);
     setIsSending(true);
 
     try {
-      const lastMessages = tempChatHistory.slice(-11); // Get the last 3 messages
+      const lastMessages = chatHistoryForServer.slice(-11); // Get the last 3 messages
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/chat`, { messages: [...lastMessages, { role: 'user', content: messageToSend }] });
       setChatHistory((oldChatHistory) => [...oldChatHistory, { role: 'assistant', content: response.data.answer }]);
+      setChatHistoryForServer((oldChatHistory) => [...oldChatHistory, { role: 'assistant', content: response.data.answer }]);
       setMessage('');
     } catch (error) {
       console.error(error);
