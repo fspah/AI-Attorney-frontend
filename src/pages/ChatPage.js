@@ -22,12 +22,13 @@ function ChatPage() {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
-    setChatHistory((oldChatHistory) => [...oldChatHistory, { role: 'user', content: message }]);
+    const tempChatHistory = [...chatHistory, { role: 'user', content: message }];
+    setChatHistory(tempChatHistory);
     setIsSending(true);
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/chat`, { prompt: message });
+      const lastMessages = tempChatHistory.slice(-5); // Get the last 3 messages
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/chat`, { messages: lastMessages });
       setChatHistory((oldChatHistory) => [...oldChatHistory, { role: 'assistant', content: response.data.answer }]);
       setMessage('');
     } catch (error) {
