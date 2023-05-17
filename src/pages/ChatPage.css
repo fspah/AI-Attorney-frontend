@@ -1,84 +1,89 @@
 .chat-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
+  border-radius: 5px;
+}
+
+.chat-box {
+  border: 1px solid #ccc;
+  height: 400px;
+  overflow-y: auto;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.chat-input-form {
+  display: flex;
+}
+
+.chat-input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.chat-submit {
+  padding: 10px 20px;
+  border: none;
+  background: #007BFF;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 10px;
+  border-radius: 5px;
+}
+
+.chat-message {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  max-width: 80%;
+}
+
+.chat-message.user {
+  background: #007BFF;
+  color: #fff;
+  align-self: flex-end;
+}
+
+.chat-message.assistant {
+  background: #f0f0f0;
+  align-self: flex-start;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  margin: 0 auto;
+}
+
+.double-bounce1, .double-bounce2 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #333;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  left: 0;
   
-  .chat-box {
-    border: 1px solid #ccc;
-    height: 400px;
-    overflow-y: auto;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 10px;
+  animation: sk-bounce 2.0s infinite ease-in-out;
+}
+
+.double-bounce2 {
+  animation-delay: -1.0s;
+}
+
+@keyframes sk-bounce {
+  0%, 100% { 
+    transform: scale(0.0);
+  } 50% { 
+    transform: scale(1.0);
   }
-  
-  .chat-input-form {
-    display: flex;
-  }
-  
-  .chat-input {
-    flex-grow: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .chat-submit {
-    padding: 10px 20px;
-    border: none;
-    background: #007BFF;
-    color: #fff;
-    cursor: pointer;
-    margin-left: 10px;
-    border-radius: 5px;
-  }
-  
-  .chat-message {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-  }
-  
-  .chat-message.user {
-    background: #007BFF;
-    color: #fff;
-  }
-  
-  .chat-message.assistant {
-    background: #f0f0f0;
-  }
-  
-  .spinner {
-    width: 40px;
-    height: 40px;
-    position: relative;
-    margin: 0 auto;
-  }
-  
-  .double-bounce1, .double-bounce2 {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background-color: #333;
-    opacity: 0.6;
-    position: absolute;
-    top: 0;
-    left: 0;
-    
-    animation: sk-bounce 2.0s infinite ease-in-out;
-  }
-  
-  .double-bounce2 {
-    animation-delay: -1.0s;
-  }
-  
-  @keyframes sk-bounce {
-    0%, 100% { 
-      transform: scale(0.0);
-    } 50% { 
-      transform: scale(1.0);
-    }
-  }
-  
+}

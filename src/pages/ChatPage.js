@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './ChatPage.css'; // Add this line to import styles
+import './ChatPage.css';
 
-// Define Spinner outside of the ChatPage
 function Spinner() {
   return (
     <div className="spinner">
@@ -39,14 +38,13 @@ function ChatPage() {
   };
 
   return (
-    <div>
+    <div className="chat-container">
       <h1>Chat with an AI attorney</h1>
-      <div>
-        {chatHistory.map((chat) => ( // remove 'index'
-          <div key={chat.id}>
-            <strong>{chat.role === 'user' ? 'You: ' : 'Assistant: '}</strong>
+      <div className="chat-box">
+        {chatHistory.map((chat) => (
+          <div className={`chat-message ${chat.role}`} key={chat.id}>
             {chat.role === 'assistant' && isSending ? (
-              <Spinner /> // replace this with your loading animation
+              <Spinner />
             ) : (
               chat.content
             )}
@@ -54,9 +52,9 @@ function ChatPage() {
         ))}
         {isSending && <p>Sending...</p>}
       </div>
-      <form onSubmit={handleFormSubmit}>
-        <input type="text" value={message} onChange={handleMessageChange} required />
-        <input type="submit" value="Send" disabled={isSending} />
+      <form className="chat-input-form" onSubmit={handleFormSubmit}>
+        <input className="chat-input" type="text" value={message} onChange={handleMessageChange} required />
+        <input className="chat-submit" type="submit" value="Send" disabled={isSending} />
       </form>
     </div>
   );
