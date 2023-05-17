@@ -26,11 +26,11 @@ function ChatPage() {
     event.preventDefault();
     const userMessage = { role: 'user', content: message };
     let messageToSend = message;
-    let attorney = 'You are an expert attorney. Give your answer on the following question: '
-    let location = "If the location isn't provided, ask me for the location/jurisdiction."
+    const attorney = 'You are an expert attorney. Give your answer on the following question: ';
+    const location = "If the location isn't provided, ask me for the location/jurisdiction.";
     if (isFirstQuestion) {
-      messageToSend=''
-      messageToSend=attorney+message+location
+      messageToSend = '';
+      messageToSend = attorney + message + location;
       setIsFirstQuestion(false);
     }
 
@@ -73,4 +73,6 @@ function ChatPage() {
       </form>
     </div>
   );
- }
+}
+
+export default ChatPage;
