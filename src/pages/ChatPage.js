@@ -43,18 +43,19 @@ function ChatPage() {
       <div className="chat-box">
         {chatHistory.map((chat) => (
           <div className={`chat-message ${chat.role}`} key={chat.id}>
-            {chat.role === 'assistant' && isSending ? (
-              <Spinner />
-            ) : (
-              chat.content
-            )}
+            {chat.content}
           </div>
         ))}
-        {isSending && <p>Sending...</p>}
       </div>
       <form className="chat-input-form" onSubmit={handleFormSubmit}>
         <input className="chat-input" type="text" value={message} onChange={handleMessageChange} required />
         <input className="chat-submit" type="submit" value="Send" disabled={isSending} />
+        {isSending && (
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Spinner />
+            <p>Sending...</p>
+          </div>
+        )}
       </form>
     </div>
   );
