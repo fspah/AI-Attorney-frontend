@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ChatPage.css';
 
@@ -16,7 +16,14 @@ function ChatPage() {
   const [chatHistory, setChatHistory] = useState([]);
   const [chatHistoryForServer, setChatHistoryForServer] = useState([]);
   const [isSending, setIsSending] = useState(false);
-  const [isFirstQuestion, setIsFirstQuestion] = useState(true);
+
+  useEffect(() => {
+    const systemMessage = {
+      role: 'system',
+      content: "You are an expert attorney. If the location isn't provided, ask me for the location/jurisdiction.",
+    };
+    setChatHistoryForServer([systemMessage]);
+  }, []);
 
   const handleMessageChange = (event) => {
     setMessage(event.target.value);
@@ -25,27 +32,19 @@ function ChatPage() {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     const userMessage = { role: 'user', content: message };
-    let messageToSend = message;
-    const attorney = 'You are an expert attorney. Give your answer on the following question: ';
-    const location = "If the location isn't provided, ask me for the location/jurisdiction.";
-    if (isFirstQuestion) {
-      messageToSend = '';
-      messageToSend = attorney + message + location;
-      setIsFirstQuestion(false);
-    }
 
     setChatHistory((oldChatHistory) => [...oldChatHistory, userMessage]);
-    setChatHistoryForServer((oldChatHistory) => [...oldChatHistory, { role: 'user', content: messageToSend }]);
+    setChatHistoryForServer((oldChatHistory) => [...oldChatHistory, userMessage]);
     setIsSending(true);
 
     try {
-      const lastMessages = chatHistoryForServer.slice(-11); // Get the last 3 messages
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/chat`, { messages: [...lastMessages, { role: 'user', content: messageToSend }] });
-      setChatHistory((oldChatHistory) => [...oldChatHistory, { role: 'assistant', content: response.data.answer }]);
-      setChatHistoryForServer((oldChatHistory) => [...oldChatHistory, { role: 'assistant', content: response.data.answer }]);
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/chat`, { messages: chatHistoryForServer });
+      const assistantMessage = { role: 'assistant', content: response.data.answer };
+      setChatHistory((oldChatHistory) => [...oldChatHistory, assistantMessage]);
+      setChatHistoryForServer((oldChatHistory) => [...oldChatHistory, assistantMessage]);
       setMessage('');
     } catch (error) {
-      console.error(error);
+      // Handling error
     }
 
     setIsSending(false);
@@ -55,8 +54,8 @@ function ChatPage() {
     <div className="chat-container">
       <h1>Chat with an AI attorney</h1>
       <div className="chat-box">
-        {chatHistory.map((chat) => (
-          <div className={`chat-message ${chat.role}`} key={chat.id}>
+        {chatHistory.map((chat, index) => (
+          <div className={`chat-message ${chat.role}`} key={`${chat.role}-${index}`}>
             {chat.content}
           </div>
         ))}
