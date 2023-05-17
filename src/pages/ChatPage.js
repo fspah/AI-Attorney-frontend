@@ -23,9 +23,6 @@ function ChatPage() {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    const tempChatHistory = [...chatHistory, { role: 'user', content: message }];
-    setChatHistory(tempChatHistory);
-    setIsSending(true);
 
     let messageToSend = message;
 
@@ -33,9 +30,12 @@ function ChatPage() {
       messageToSend = `You are an expert attorney. Give your answer on the following question: ${message}. If the location isn't provided, ask me for the location/jurisdiction.`;
       setIsFirstQuestion(false);
     }
+    const tempChatHistory = [...chatHistory, { role: 'user', content: messageToSend }];
+    setChatHistory(tempChatHistory);
+    setIsSending(true);
 
     try {
-      const lastMessages = tempChatHistory.slice(-5); // Get the last 3 messages
+      const lastMessages = tempChatHistory.slice(-11); // Get the last 3 messages
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/chat`, { messages: [...lastMessages, { role: 'user', content: messageToSend }] });
       setChatHistory((oldChatHistory) => [...oldChatHistory, { role: 'assistant', content: response.data.answer }]);
       setMessage('');
