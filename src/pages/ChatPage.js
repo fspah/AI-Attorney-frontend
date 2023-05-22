@@ -31,7 +31,6 @@ function ChatPage() {
     }
   }, [chatHistory]);
 
-
   const handleMessageChange = (event) => {
     setMessage(event.target.value);
   };
@@ -62,7 +61,9 @@ function ChatPage() {
   return (
     <div className="chat-container">
       <h1>Chat with an AI attorney</h1>
-      <div className="chat-box" ref={chatBoxRef}> {/* Add ref here */}
+      <div className="chat-box" ref={chatBoxRef}>
+        {' '}
+        {/* Add ref here */}
         {chatHistory.map((chat, index) => (
           // eslint-disable-next-line
           <div className={`chat-message ${chat.role}`} key={`${chat.role}-${index}`}>
