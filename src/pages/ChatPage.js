@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './ChatPage.css';
 
@@ -16,14 +16,21 @@ function ChatPage() {
   const [chatHistory, setChatHistory] = useState([]);
   const [chatHistoryForServer, setChatHistoryForServer] = useState([]);
   const [isSending, setIsSending] = useState(false);
+  const chatBoxRef = useRef(null);
 
   useEffect(() => {
+    // The initial system message
     const systemMessage = {
       role: 'user',
       content: "You are an expert attorney. If the location isn't provided, ask me for the location/jurisdiction.",
     };
     setChatHistoryForServer([systemMessage]);
-  }, []);
+
+    if (chatBoxRef.current) {
+      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+    }
+  }, [chatHistory]);
+
 
   const handleMessageChange = (event) => {
     setMessage(event.target.value);
@@ -55,7 +62,7 @@ function ChatPage() {
   return (
     <div className="chat-container">
       <h1>Chat with an AI attorney</h1>
-      <div className="chat-box">
+      <div className="chat-box" ref={chatBoxRef}> {/* Add ref here */}
         {chatHistory.map((chat, index) => (
           // eslint-disable-next-line
           <div className={`chat-message ${chat.role}`} key={`${chat.role}-${index}`}>
