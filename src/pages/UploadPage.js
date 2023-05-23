@@ -107,7 +107,7 @@ function UploadPage() {
         }}
       >
         <label htmlFor="file">
-          PDF: 
+          PDF:
           <input
             type="file"
             onChange={handleFileChange}

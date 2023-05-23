@@ -59,21 +59,6 @@ function ChatPage() {
     setIsSending(false);
   };
 
-  const buttonStyle = {
-    position: 'absolute', // Added to position the button at the top right corner
-    top: '10px', // Adjust as needed
-    right: '10px', // Adjust as needed
-    display: 'inline-block',
-    backgroundColor: '#007BFF',
-    color: '#fff',
-    padding: '10px 20px',
-    margin: '10px 0',
-    textDecoration: 'none',
-    borderRadius: '5px',
-    textAlign: 'center',
-    transition: 'background-color 0.3s ease',
-  };
-
   return (
     <div className="chat-container">
       <h1>Chat with an AI attorney</h1>
