@@ -94,7 +94,6 @@ function UploadPage() {
   };
 
   return (
-  // Remaining JSX
     <div
       className="App"
       style={{
@@ -105,17 +104,20 @@ function UploadPage() {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#f8f9fa',
+        border: '1px solid #e9ecef',
+        borderRadius: '5px',
+        maxWidth: '600px',
+        margin: 'auto',
       }}
     >
-
-      <h1 style={{ textAlign: 'center', color: '#444' }}>AI Attorney</h1>
+      <h1 style={{ textAlign: 'center', color: '#444', marginBottom: '20px' }}>AI Attorney</h1>
       <form
         onSubmit={handleFileUpload}
         style={{
           display: 'flex',
           flexDirection: 'column',
           maxWidth: '300px',
-          margin: 'auto',
         }}
       >
         <label htmlFor="file">
@@ -127,7 +129,6 @@ function UploadPage() {
             id="file"
           />
         </label>
-
         <input
           type="submit"
           value="Upload"
@@ -142,7 +143,6 @@ function UploadPage() {
           }}
         />
       </form>
-
       {isLoading && (
       <div style={{ textAlign: 'center', marginTop: '10px', color: '#999' }}>
         <p>Uploading... This may take several minutes depending on the document size.</p>
@@ -150,15 +150,14 @@ function UploadPage() {
           value={progress}
           max="100"
           style={{
-            width: '35%',
+            width: '100%',
             appearance: 'none',
             height: '50px',
-            color: '#007BFF', // Change color to your preference
+            color: '#007BFF',
           }}
         />
       </div>
       )}
-
       {filename && !isLoading && (
       <form
         onSubmit={handleQuestionSubmit}
@@ -166,7 +165,6 @@ function UploadPage() {
           display: 'flex',
           flexDirection: 'column',
           maxWidth: '300px',
-          margin: 'auto',
         }}
       >
         <label htmlFor="question">
@@ -203,7 +201,6 @@ function UploadPage() {
         />
       </form>
       )}
-
       {isQuestionLoading && (
       <div style={{ textAlign: 'center', marginTop: '10px', color: '#999' }}>
         <p>Processing your question...</p>
@@ -211,22 +208,22 @@ function UploadPage() {
           value={questionProgress}
           max="100"
           style={{
-            width: '25%',
+            width: '35%',
             appearance: 'none',
             height: '50px',
-            color: '#007BFF', // Change color to your preference
+            color: '#007BFF',
           }}
         />
       </div>
       )}
-
       {answer && (
       <p
         style={{
           marginTop: '20px',
-          border: '1px solid #ddd',
+          border: '1px solid #007BFF',
           padding: '10px',
           borderRadius: '5px',
+          backgroundColor: '#e9ecef',
         }}
       >
         {`Answer: ${answer}`}
@@ -234,6 +231,7 @@ function UploadPage() {
       )}
     </div>
   );
+  
 }
 
 export default UploadPage;
