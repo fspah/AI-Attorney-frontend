@@ -63,7 +63,11 @@ function ChatPage() {
     <div className="chat-container">
       <h1>Chat with an AI attorney</h1>
       <div className="chat-box" ref={chatBoxRef}>
-        {/* Chat history rendering remains the same */}
+        {chatHistory.map((chat, index) => (
+          <div className={`chat-message ${chat.role}`} key={`${chat.role}-${index}`}>
+            {chat.content}
+          </div>
+        ))}
       </div>
       <form className="chat-input-form" onSubmit={handleFormSubmit}>
         <input className="chat-input" type="text" value={message} onChange={handleMessageChange} required />
