@@ -64,6 +64,7 @@ function ChatPage() {
       <h1>Chat with an AI attorney</h1>
       <div className="chat-box" ref={chatBoxRef}>
         {chatHistory.map((chat, index) => (
+          // eslint-disable-next-line
           <div className={`chat-message ${chat.role}`} key={`${chat.role}-${index}`}>
             {chat.content}
           </div>
