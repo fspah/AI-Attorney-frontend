@@ -76,7 +76,7 @@ function ChatPage() {
         {isSending && (
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Spinner />
-            <p>Sending...</p>
+            <p>Processing...</p>
           </div>
         )}
       </form>
@@ -96,7 +96,7 @@ function ChatPage() {
         onMouseOver={(e) => { e.target.style.backgroundColor = '#0056b3'; }}
         onMouseOut={(e) => { e.target.style.backgroundColor = '#007BFF'; }}
       >
-        Query a legal file with AI Attorney
+        Question a legal file with an AI Attorney
       </Link>
     </div>
   );
