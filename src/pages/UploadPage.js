@@ -208,7 +208,7 @@ function UploadPage() {
           value={questionProgress}
           max="100"
           style={{
-            width: '35%',
+            width: '100%',
             appearance: 'none',
             height: '50px',
             color: '#007BFF',
