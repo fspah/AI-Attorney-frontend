@@ -30,7 +30,7 @@ function UploadPage() {
 
     let interval;
     if (file) { // Only setup the progress interval when there's a file
-      const estimatedTime = (fileSizeKb / 1024) * 80; // 1 MB is approx. 90 seconds
+      const estimatedTime = (fileSizeKb / 1024) * 90; // 1 MB is approx. 90 seconds
       // Set an interval to update the progress bar
       interval = setInterval(() => {
         setProgress((oldProgress) => {
