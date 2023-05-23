@@ -132,6 +132,7 @@ function UploadPage() {
         <input
           type="submit"
           value="Upload"
+          disabled={!file}
           style={{
             margin: '20px 0',
             padding: '10px',
