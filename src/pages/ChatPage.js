@@ -71,7 +71,7 @@ function ChatPage() {
         ))}
       </div>
       <form className="chat-input-form" onSubmit={handleFormSubmit}>
-        <input className="chat-input" type="text" value={message} onChange={handleMessageChange} required style={{ fontSize: '15px' }} />
+        <input className="chat-input" type="text" value={message} onChange={handleMessageChange} required style={{ fontSize: '17px' }} />
         <input className="chat-submit" type="submit" value="Send" disabled={isSending} />
         {isSending && (
           <div style={{ display: 'flex', alignItems: 'center' }}>
