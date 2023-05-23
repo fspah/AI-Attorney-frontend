@@ -95,7 +95,19 @@ function UploadPage() {
 
   return (
   // Remaining JSX
-    <div className="App" style={{ padding: '10px', fontFamily: 'Arial' }}>
+    <div
+      className="App"
+      style={{
+        padding: '10px',
+        fontFamily: 'Arial',
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+
       <h1 style={{ textAlign: 'center', color: '#444' }}>AI Attorney</h1>
       <form
         onSubmit={handleFileUpload}
@@ -138,7 +150,7 @@ function UploadPage() {
           value={progress}
           max="100"
           style={{
-            width: '25%',
+            width: '35%',
             appearance: 'none',
             height: '50px',
             color: '#007BFF', // Change color to your preference

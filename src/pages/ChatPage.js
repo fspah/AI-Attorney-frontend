@@ -96,7 +96,7 @@ function ChatPage() {
         onMouseOver={(e) => { e.target.style.backgroundColor = '#0056b3'; }}
         onMouseOut={(e) => { e.target.style.backgroundColor = '#007BFF'; }}
       >
-        Query a legal file with AI
+        Query a legal file with AI Attorney
       </Link>
     </div>
   );
