@@ -125,7 +125,7 @@ function UploadPage() {
           <input
             type="file"
             onChange={handleFileChange}
-            style={{ margin: '10px 0' }}
+            style={{ margin: '10px 0', marginLeft: '10px' }}
             id="file"
           />
         </label>
