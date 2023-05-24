@@ -206,7 +206,7 @@ function UploadPage() {
         />
       </div>
       )}
-      {!isLoading && (
+      {filename && !isLoading && (
       <div className="chat-container">
         <div className="chat-box" ref={chatBoxRef}>
           {chatHistory.map((chat, index) => (
