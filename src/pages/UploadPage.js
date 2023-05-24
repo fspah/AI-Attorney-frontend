@@ -1,27 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import '../App.css';
+import './ChatPage.css';
+
+function Spinner() {
+  return (
+    <div className="spinner">
+      <div className="double-bounce1" />
+      <div className="double-bounce2" />
+    </div>
+  );
+}
 
 function UploadPage() {
   const [file, setFile] = useState(null);
   const [filename, setFilename] = useState('');
   const [fileSizeKb, setFileSizeKb] = useState(0);
-  const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isQuestionLoading, setIsQuestionLoading] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [questionProgress, setQuestionProgress] = useState(0);
+  const [message, setMessage] = useState('');
+  const [chatHistory, setChatHistory] = useState([]);
+  const [chatHistoryForServer, setChatHistoryForServer] = useState([]);
+  const [isSending, setIsSending] = useState(false);
+  const chatBoxRef = useRef(null);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
     const fileSizeInKb = selectedFile.size / 1024; // Get the file size in kilobytes
     setFileSizeKb(fileSizeInKb);
-  };
-
-  const handleQuestionChange = (event) => {
-    setQuestion(event.target.value);
   };
 
   const handleFileUpload = async (event) => {
@@ -59,8 +66,48 @@ function UploadPage() {
       }
     }
   };
+  useEffect(() => {
+    // The initial system message
+    const systemMessage = {
+      role: 'user',
+      content: "You are an expert attorney. Answer the next message. If the location isn't provided, ask me for the location/jurisdiction.",
+    };
+    setChatHistoryForServer([systemMessage]);
 
-  const handleQuestionSubmit = async (event) => {
+    if (chatBoxRef.current) {
+      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+    }
+  }, [chatHistory]);
+
+  const handleMessageChange = (event) => {
+    setMessage(event.target.value);
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    const userMessage = { role: 'user', content: message };
+
+    const newChatHistoryForServer = [...chatHistoryForServer, userMessage];
+
+    setChatHistory((oldChatHistory) => [...oldChatHistory, userMessage]);
+    setChatHistoryForServer(newChatHistoryForServer);
+    setIsSending(true);
+    const formData = new FormData();
+    formData.append('filename', filename);
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/process-pdf`, formData, { messages: newChatHistoryForServer });
+      const assistantMessage = { role: 'assistant', content: response.data.answer };
+      setChatHistory((oldChatHistory) => [...oldChatHistory, assistantMessage]);
+      setChatHistoryForServer((oldChatHistory) => [...oldChatHistory, assistantMessage]);
+      setMessage('');
+    } catch (error) {
+      // Handling error
+    }
+
+    setIsSending(false);
+  };
+
+  /*  const handleQuestionSubmit = async (event) => {
     event.preventDefault();
     setIsQuestionLoading(true);
 
@@ -81,7 +128,8 @@ function UploadPage() {
     formData.append('question', question);
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/process-pdf`, formData);
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/process-pdf`,
+      formData);
       setAnswer(response.data.answer);
       setQuestionProgress(0);
       clearInterval(interval);
@@ -91,7 +139,7 @@ function UploadPage() {
       setIsQuestionLoading(false); // make sure to set loading to false in case of an error
       clearInterval(interval); // also clear the interval in case of an error
     }
-  };
+  }; */
 
   return (
     <div
@@ -111,7 +159,6 @@ function UploadPage() {
         margin: 'auto',
       }}
     >
-      <h1 style={{ textAlign: 'center', color: '#444', marginBottom: '20px' }}>AI Attorney</h1>
       <form
         onSubmit={handleFileUpload}
         style={{
@@ -159,77 +206,27 @@ function UploadPage() {
         />
       </div>
       )}
-      {filename && !isLoading && (
-      <form
-        onSubmit={handleQuestionSubmit}
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          maxWidth: '300px',
-        }}
-      >
-        <label htmlFor="question">
-          Question:
-          <textarea
-            value={question}
-            onChange={handleQuestionChange}
-            required
-            rows={5}
-            style={{
-              margin: '10px 0',
-              padding: '10px',
-              width: '100%',
-              borderRadius: '5px',
-              border: '1px solid #ccc',
-              fontSize: '16px',
-              resize: 'vertical',
-            }}
-            id="question"
-          />
-        </label>
-        <input
-          type="submit"
-          value="Submit Question"
-          style={{
-            margin: '20px 0',
-            padding: '10px',
-            background: '#007BFF',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer',
-          }}
-        />
-      </form>
-      )}
-      {isQuestionLoading && (
-      <div style={{ textAlign: 'center', marginTop: '10px', color: '#999' }}>
-        <p>Processing your question...</p>
-        <progress
-          value={questionProgress}
-          max="100"
-          style={{
-            width: '100%',
-            appearance: 'none',
-            height: '50px',
-            color: '#007BFF',
-          }}
-        />
+      <div className="chat-container">
+        <h1>Chat with an AI attorney</h1>
+        <div className="chat-box" ref={chatBoxRef}>
+          {chatHistory.map((chat, index) => (
+          // eslint-disable-next-line
+          <div className={`chat-message ${chat.role}`} key={`${chat.role}-${index}`}>
+            {chat.content}
+          </div>
+          ))}
+        </div>
+        <form className="chat-input-form" onSubmit={handleFormSubmit}>
+          <input className="chat-input" type="text" value={message} onChange={handleMessageChange} required style={{ fontSize: '18px' }} />
+          <input className="chat-submit" type="submit" value="Send" disabled={isSending} />
+          {isSending && (
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Spinner />
+            <p>Processing...</p>
+          </div>
+          )}
+        </form>
       </div>
-      )}
-      {answer && (
-      <p
-        style={{
-          marginTop: '20px',
-          border: '1px solid #007BFF',
-          padding: '10px',
-          borderRadius: '5px',
-          backgroundColor: '#e9ecef',
-        }}
-      >
-        {`Answer: ${answer}`}
-      </p>
-      )}
     </div>
   );
 }
