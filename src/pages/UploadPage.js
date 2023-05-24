@@ -66,6 +66,7 @@ function UploadPage() {
       }
     }
   };
+
   useEffect(() => {
     // The initial system message
     const systemMessage = {
@@ -107,39 +108,13 @@ function UploadPage() {
     setIsSending(false);
   };
 
-  /*  const handleQuestionSubmit = async (event) => {
-    event.preventDefault();
-    setIsQuestionLoading(true);
-
-    const estimatedTime = 15;
-    const interval = setInterval(() => {
-      setQuestionProgress((oldProgress) => {
-        if (oldProgress >= 100) {
-          clearInterval(interval);
-          return 100;
-        }
-        const newProgress = oldProgress + 100 / estimatedTime;
-        return Math.min(newProgress, 100);
-      });
-    }, 1000);
-
-    const formData = new FormData();
-    formData.append('filename', filename);
-    formData.append('question', question);
-
-    try {
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/process-pdf`,
-      formData);
-      setAnswer(response.data.answer);
-      setQuestionProgress(0);
-      clearInterval(interval);
-      setIsQuestionLoading(false);
-    } catch (error) {
-      console.error(error);
-      setIsQuestionLoading(false); // make sure to set loading to false in case of an error
-      clearInterval(interval); // also clear the interval in case of an error
-    }
-  }; */
+  if (file) {
+    return (
+      <div className="App">
+        {/* Render the contents of UploadPage when a file is selected */}
+      </div>
+    );
+  }
 
   return (
     <div
@@ -192,38 +167,37 @@ function UploadPage() {
         />
       </form>
       {isLoading && (
-      <div style={{ textAlign: 'center', marginTop: '10px', color: '#999' }}>
-        <p>Uploading... This may take several minutes depending on the document size.</p>
-        <progress
-          value={progress}
-          max="100"
-          style={{
-            width: '100%',
-            appearance: 'none',
-            height: '50px',
-            color: '#007BFF',
-          }}
-        />
-      </div>
+        <div style={{ textAlign: 'center', marginTop: '10px', color: '#999' }}>
+          <p>Uploading... This may take several minutes depending on the document size.</p>
+          <progress
+            value={progress}
+            max="100"
+            style={{
+              width: '100%',
+              appearance: 'none',
+              height: '50px',
+              color: '#007BFF',
+            }}
+          />
+        </div>
       )}
       <div className="chat-container">
-        <h1>Chat with an AI attorney</h1>
         <div className="chat-box" ref={chatBoxRef}>
           {chatHistory.map((chat, index) => (
-          // eslint-disable-next-line
-          <div className={`chat-message ${chat.role}`} key={`${chat.role}-${index}`}>
-            {chat.content}
-          </div>
+            // eslint-disable-next-line
+            <div className={`chat-message ${chat.role}`} key={`${chat.role}-${index}`}>
+              {chat.content}
+            </div>
           ))}
         </div>
         <form className="chat-input-form" onSubmit={handleFormSubmit}>
           <input className="chat-input" type="text" value={message} onChange={handleMessageChange} required style={{ fontSize: '18px' }} />
           <input className="chat-submit" type="submit" value="Send" disabled={isSending} />
           {isSending && (
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Spinner />
-            <p>Processing...</p>
-          </div>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <Spinner />
+              <p>Processing...</p>
+            </div>
           )}
         </form>
       </div>
