@@ -159,6 +159,7 @@ function UploadPage() {
         margin: 'auto',
       }}
     >
+      <h1 style={{ marginBottom: '20px' }}>AI Attorney</h1>
       <form
         onSubmit={handleFileUpload}
         style={{
