@@ -92,17 +92,21 @@ function UploadPage() {
     setChatHistory((oldChatHistory) => [...oldChatHistory, userMessage]);
     setChatHistoryForServer(newChatHistoryForServer);
     setIsSending(true);
-    const formData = new FormData();
-    formData.append('filename', filename);
-    formData.append('chat', JSON.stringify({ messages: newChatHistoryForServer }));
+
     try {
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/process-pdf`, formData);
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/process-pdf`,
+        {
+          messages: newChatHistoryForServer,
+          filename,
+        },
+      );
       const assistantMessage = { role: 'assistant', content: response.data.answer };
       setChatHistory((oldChatHistory) => [...oldChatHistory, assistantMessage]);
       setChatHistoryForServer((oldChatHistory) => [...oldChatHistory, assistantMessage]);
       setMessage('');
     } catch (error) {
-      // Handling error
+      // Handle error
     }
 
     setIsSending(false);
