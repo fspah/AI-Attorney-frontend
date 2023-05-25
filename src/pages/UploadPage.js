@@ -70,7 +70,7 @@ function UploadPage() {
     // The initial system message
     const systemMessage = {
       role: 'user',
-      content: "You are an expert attorney.  Use the following pieces of context to answer the message at the end. ",
+      content: 'You are an expert attorney.  Use the following pieces of context to answer the message at the end. ',
     };
     setChatHistoryForServer([systemMessage]);
 
