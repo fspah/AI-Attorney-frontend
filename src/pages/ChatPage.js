@@ -20,17 +20,12 @@ function ChatPage() {
   const chatBoxRef = useRef(null);
 
   useEffect(() => {
-    // The initial system message
     const systemMessage = {
       role: 'user',
       content: "You are an expert attorney. Answer the question. If the location isn't provided, ask me for the location/jurisdiction.",
     };
     setChatHistoryForServer([systemMessage]);
-
-    if (chatBoxRef.current) {
-      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
-    }
-  }, [chatHistory]);
+  }, []);
 
   const handleMessageChange = (event) => {
     setMessage(event.target.value);
