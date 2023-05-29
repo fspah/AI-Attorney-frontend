@@ -47,7 +47,7 @@ function ChatPage() {
     setIsSending(true);
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/chat`, { messages: newChatHistoryForServer });
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/chat`, { messages: chatHistoryForServer });
       const assistantMessage = { role: 'assistant', content: response.data.answer };
       setChatHistory((oldChatHistory) => [...oldChatHistory, assistantMessage]);
       setChatHistoryForServer((oldChatHistory) => [...oldChatHistory, assistantMessage]);
