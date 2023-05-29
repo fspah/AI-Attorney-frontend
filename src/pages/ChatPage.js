@@ -26,6 +26,12 @@ function ChatPage() {
     };
     setChatHistoryForServer([systemMessage]);
   }, []);
+  useEffect(() => {
+    // Scroll the chat box to the bottom when a new message is added
+    if (chatBoxRef.current) {
+      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+    }
+  }, [chatHistory]);
 
   const handleMessageChange = (event) => {
     setMessage(event.target.value);
