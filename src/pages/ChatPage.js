@@ -23,7 +23,7 @@ function ChatPage() {
     // The initial system message
     const systemMessage = {
       role: 'user',
-      content: "You are an expert attorney. Answer the next message. If the location isn't provided, ask me for the location/jurisdiction.",
+      content: "You are an expert attorney. Answer the message. If the location isn't provided, ask me for the location/jurisdiction.",
     };
     setChatHistoryForServer([systemMessage]);
 
