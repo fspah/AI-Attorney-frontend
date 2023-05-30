@@ -87,15 +87,15 @@ function UploadPage() {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     const userMessage = { role: 'user', content: message };
-    setChatHistoryForServer((oldChatHistory) => [...oldChatHistory, userMessage]);
     setChatHistory((oldChatHistory) => [...oldChatHistory, userMessage]);
     setIsSending(true);
-
+    const newChatHistory = [...chatHistoryForServer, userMessage];
+    setChatHistoryForServer(newChatHistory);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/process-pdf`,
         {
-          messages: chatHistoryForServer,
+          messages: newChatHistory,
           filename,
         },
       );
