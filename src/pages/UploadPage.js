@@ -61,8 +61,8 @@ function UploadPage() {
         clearInterval(interval);
       } catch (error) {
         console.error(error);
-        setIsLoading(false); 
-        clearInterval(interval); 
+        setIsLoading(false);
+        clearInterval(interval);
       }
     }
   };
