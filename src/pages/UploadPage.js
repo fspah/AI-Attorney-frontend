@@ -229,6 +229,7 @@ function UploadPage() {
             border: 'none',
             borderRadius: '5px',
             cursor: 'pointer',
+            fontSize: '16px',
           }}
         />
       </form>
