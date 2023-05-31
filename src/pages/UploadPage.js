@@ -171,13 +171,27 @@ function UploadPage() {
           maxWidth: '300px',
         }}
       >
-        <label htmlFor="file">
+        <label
+          htmlFor="file"
+          style={{
+            display: 'inline-block',
+            padding: '10px 20px',
+            background: '#007BFF',
+            color: '#fff',
+            cursor: 'pointer',
+            borderRadius: '5px',
+            marginTop: '10px',
+          }}
+        >
           PDF:
           <input
             type="file"
             onChange={handleFileChange}
-            style={{ margin: '10px 0', marginLeft: '10px' }}
             id="file"
+            style={{
+              position: 'absolute',
+              left: '-9999px', // This will hide the input field off-screen
+            }}
           />
         </label>
         <input
