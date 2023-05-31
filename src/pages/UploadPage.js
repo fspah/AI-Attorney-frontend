@@ -23,6 +23,7 @@ function UploadPage() {
   const [chatHistoryForServer, setChatHistoryForServer] = useState([]);
   const [isSending, setIsSending] = useState(false);
   const chatBoxRef = useRef(null);
+  const [uploadStatus, setUploadStatus] = useState(false);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -35,6 +36,7 @@ function UploadPage() {
   const handleFileUpload = async (event) => {
     event.preventDefault();
     setIsLoading(true);
+    setUploadStatus(false);
 
     let interval;
     if (file) { // Only setup the progress interval when there's a file
@@ -60,6 +62,7 @@ function UploadPage() {
         setProgress(0);
         setIsLoading(false);
         clearInterval(interval);
+        setUploadStatus(true);
       } catch (error) {
         console.error(error);
         setIsLoading(false);
@@ -244,7 +247,7 @@ function UploadPage() {
         />
       </div>
       )}
-      {filename && !isLoading && (
+      {filename && uploadStatus && !isLoading && (
       <div className="chat-container">
         <div className="chat-box" ref={chatBoxRef}>
           {chatHistory.map((chat, index) => (
