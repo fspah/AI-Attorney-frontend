@@ -27,6 +27,7 @@ function UploadPage() {
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
+    setFilename(selectedFile.name);
     const fileSizeInKb = selectedFile.size / 1024; // Get the file size in kilobytes
     setFileSizeKb(fileSizeInKb);
   };
@@ -199,6 +200,18 @@ function UploadPage() {
               }}
             />
           </label>
+          {filename && (
+          <div style={{
+            marginTop: '10px',
+            fontSize: '14px',
+            color: '#333',
+          }}
+          >
+            Selected file:
+            {' '}
+            {filename}
+          </div>
+          )}
         </div>
 
         <input
