@@ -171,29 +171,36 @@ function UploadPage() {
           maxWidth: '300px',
         }}
       >
-        <label
-          htmlFor="file"
-          style={{
-            display: 'inline-block',
-            padding: '10px 20px',
-            background: '#007BFF',
-            color: '#fff',
-            cursor: 'pointer',
-            borderRadius: '5px',
-            marginTop: '10px',
-          }}
+        <div style={{
+          display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%',
+        }}
         >
-          PDF:
-          <input
-            type="file"
-            onChange={handleFileChange}
-            id="file"
+          <span>PDF:</span>
+          <label
+            htmlFor="file"
             style={{
-              position: 'absolute',
-              left: '-9999px', // This will hide the input field off-screen
+              display: 'inline-block',
+              padding: '10px 20px',
+              background: '#007BFF',
+              color: '#fff',
+              cursor: 'pointer',
+              borderRadius: '5px',
+              marginTop: '10px',
             }}
-          />
-        </label>
+          >
+            Browse File...
+            <input
+              type="file"
+              onChange={handleFileChange}
+              id="file"
+              style={{
+                position: 'absolute',
+                left: '-9999px', // This will hide the input field off-screen
+              }}
+            />
+          </label>
+        </div>
+
         <input
           type="submit"
           value="Upload"
