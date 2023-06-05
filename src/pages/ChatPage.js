@@ -18,6 +18,7 @@ function ChatPage() {
   const [chatHistoryForServer, setChatHistoryForServer] = useState([]);
   const [isSending, setIsSending] = useState(false);
   const chatBoxRef = useRef(null);
+  const [errorr, setError] = useState(null);
 
   useEffect(() => {
     const systemMessage = {
@@ -55,7 +56,7 @@ function ChatPage() {
       setChatHistoryForServer((oldChatHistory) => [...oldChatHistory, assistantMessage]);
       setMessage('');
     } catch (error) {
-      // Handling error
+      setError('Oops! Something went wrong, please try again.');
     }
 
     setIsSending(false);
@@ -63,7 +64,8 @@ function ChatPage() {
 
   return (
     <div className="chat-container">
-      <h1>Chat with an AI attorney</h1>
+      <h1>CHAT WITH AN AI ATTORNEY</h1>
+      {errorr && <p className="error-message">{errorr}</p>}
       <div className="chat-box" ref={chatBoxRef}>
         {chatHistory.map((chat, index) => (
           // eslint-disable-next-line
