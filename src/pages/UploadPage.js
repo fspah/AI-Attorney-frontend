@@ -115,7 +115,7 @@ function UploadPage() {
 
   return (
     <div className="upload-container">
-      <h1>AI Attorney</h1>
+      <h1>AI ATTORNEY</h1>
       <form onSubmit={handleFileUpload} className="upload-form">
         <div className="upload-file-section">
           <span>PDF:</span>
