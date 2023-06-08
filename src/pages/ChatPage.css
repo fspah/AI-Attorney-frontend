@@ -8,9 +8,25 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', Arial, sans-serif;  /* Change the font for a modern look */
   color: var(--text-color);
   background-color: var(--bg-color);
+}
+
+.upload-link {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 10px 20px;
+  margin: 10px 0;
+  text-decoration: none;
+  border-radius: 5px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.upload-link:hover {
+  background-color: var(--dark-primary-color);
 }
 
 .chat-container {
@@ -19,7 +35,7 @@ body {
   padding: 20px;
   box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  background-color: #fff;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);  /* Add a slight gradient for a richer look */
 }
 
 .chat-box {
@@ -30,6 +46,7 @@ body {
   margin-bottom: 20px;
   border-radius: 10px;
   background-color: #fff;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);  /* Add a shadow for a depth feel */
 }
 
 .chat-input-form {
@@ -67,10 +84,22 @@ body {
 }
 
 .chat-message.user {
-  background: var(--light-primary-color);
-  color: #000; 
+  background: #007aff;  /* This is the standard iMessage color */
+  color: #fff;
   align-self: flex-end;
 }
+
+.chat-message.chat-message-user {
+  background: #007aff;  /* This is the standard iMessage color */
+  color: #fff;
+  align-self: flex-end;
+}
+
+.chat-message.chat-message-assistant {
+  background: var(--light-grey);
+  align-self: flex-start;
+}
+
 
 .chat-message.assistant {
   background: var(--light-grey);
@@ -82,36 +111,58 @@ body {
 }
 
 .spinner {
+  margin: 100px auto;
   width: 40px;
   height: 40px;
   position: relative;
-  margin: 0 auto;
+  text-align: center;
+
+  -webkit-animation: sk-rotate 2.0s infinite linear;
+  animation: sk-rotate 2.0s infinite linear;
 }
 
-.double-bounce1, .double-bounce2 {
+.spinner .double-bounce1, .spinner .double-bounce2 {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: #333;
+  background-color: #007bff;
   opacity: 0.6;
   position: absolute;
   top: 0;
   left: 0;
-  
+
+  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
   animation: sk-bounce 2.0s infinite ease-in-out;
 }
 
-.double-bounce2 {
+.spinner .double-bounce2 {
+  -webkit-animation-delay: -1.0s;
   animation-delay: -1.0s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+@-webkit-keyframes sk-rotate { 100% { -webkit-transform: rotate(360deg) }}
+@keyframes sk-rotate { 100% { transform: rotate(360deg); -webkit-transform: rotate(360deg) }}
+
+@-webkit-keyframes sk-bounce {
+  0%, 100% { -webkit-transform: scale(0.0) }
+  50% { -webkit-transform: scale(1.0) }
 }
 
 @keyframes sk-bounce {
   0%, 100% { 
     transform: scale(0.0);
+    -webkit-transform: scale(0.0);
   } 50% { 
     transform: scale(1.0);
+    -webkit-transform: scale(1.0);
   }
 }
+
 
 @media screen and (max-width: 768px) {
   .chat-container {

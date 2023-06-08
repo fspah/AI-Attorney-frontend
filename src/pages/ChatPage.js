@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import './ChatPage.css';
 
 function Spinner() {
@@ -9,6 +10,56 @@ function Spinner() {
       <div className="double-bounce1" />
       <div className="double-bounce2" />
     </div>
+  );
+}
+
+function ChatMessage({ message }) {
+  const isUser = message.role === 'user';
+  const messageClass = isUser ? 'chat-message-user' : 'chat-message-assistant';
+
+  return (
+    <div className={`chat-message ${messageClass}`}>
+      {message.content}
+    </div>
+  );
+}
+ChatMessage.propTypes = {
+  message: PropTypes.shape({
+    role: PropTypes.string,
+    content: PropTypes.string,
+  }).isRequired,
+};
+
+function ChatInput({
+  onMessageChange, message, isSending, onFormSubmit,
+}) {
+  return (
+    <form className="chat-input-form" onSubmit={onFormSubmit}>
+      <input className="chat-input" type="text" value={message} onChange={onMessageChange} required style={{ fontSize: '18px' }} />
+      <button type="submit" className="chat-submit" disabled={isSending}>
+        {isSending ? 'Sending...' : 'Send'}
+      </button>
+    </form>
+  );
+}
+
+ChatInput.propTypes = {
+  onMessageChange: PropTypes.func.isRequired,
+  message: PropTypes.string.isRequired,
+  isSending: PropTypes.bool.isRequired,
+  onFormSubmit: PropTypes.func.isRequired,
+};
+
+function DocumentUploadLink() {
+  return (
+    <Link
+      to="/upload"
+      className="upload-link"
+      onMouseOver={(e) => { e.target.style.backgroundColor = '#0056b3'; }}
+      onMouseOut={(e) => { e.target.style.backgroundColor = '#007BFF'; }}
+    >
+      Ask questions about a legal document with an AI Attorney
+    </Link>
   );
 }
 
@@ -49,7 +100,7 @@ function ChatPage() {
     setIsSending(true);
 
     try {
-      console.log(newChatHistoryForServer);
+      // console.log(newChatHistoryForServer);
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/chat`, { messages: newChatHistoryForServer });
       const assistantMessage = { role: 'assistant', content: response.data.answer };
       setChatHistory((oldChatHistory) => [...oldChatHistory, assistantMessage]);
@@ -64,44 +115,23 @@ function ChatPage() {
 
   return (
     <div className="chat-container">
-      <h1>CHAT WITH AN AI ATTORNEY</h1>
-      {errorr && <p className="error-message">{errorr}</p>}
+      <h1>Chat with an AI Attorney</h1>
       <div className="chat-box" ref={chatBoxRef}>
-        {chatHistory.map((chat, index) => (
-          // eslint-disable-next-line
-          <div className={`chat-message ${chat.role}`} key={`${chat.role}-${index}`}>
-            {chat.content}
-          </div>
+        {errorr && <p className="error-message">{errorr}</p>}
+        {chatHistory.map((chat) => (
+          <ChatMessage key={`${chat.role}-${chat.content}`} message={chat} />
         ))}
+        {isSending && <Spinner />}
+        {' '}
+        {/* Now the spinner will be displayed when isSending is true */}
       </div>
-      <form className="chat-input-form" onSubmit={handleFormSubmit}>
-        <input className="chat-input" type="text" value={message} onChange={handleMessageChange} required style={{ fontSize: '18px' }} />
-        <input className="chat-submit" type="submit" value="Send" disabled={isSending} />
-        {isSending && (
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Spinner />
-            <p>Processing...</p>
-          </div>
-        )}
-      </form>
-      <Link
-        to="/upload"
-        style={{
-          display: 'inline-block',
-          backgroundColor: '#007BFF',
-          color: '#fff',
-          padding: '10px 20px',
-          margin: '10px 0',
-          textDecoration: 'none',
-          borderRadius: '5px',
-          textAlign: 'center',
-          transition: 'background-color 0.3s ease',
-        }}
-        onMouseOver={(e) => { e.target.style.backgroundColor = '#0056b3'; }}
-        onMouseOut={(e) => { e.target.style.backgroundColor = '#007BFF'; }}
-      >
-        Ask questions about a legal document with an AI Attorney
-      </Link>
+      <ChatInput
+        onMessageChange={handleMessageChange}
+        message={message}
+        isSending={isSending}
+        onFormSubmit={handleFormSubmit}
+      />
+      <DocumentUploadLink />
     </div>
   );
 }
