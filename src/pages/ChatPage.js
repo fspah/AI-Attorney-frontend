@@ -37,7 +37,7 @@ function ChatInput({
     <form className="chat-input-form" onSubmit={onFormSubmit}>
       <input className="chat-input" type="text" value={message} onChange={onMessageChange} required style={{ fontSize: '18px' }} />
       <button type="submit" className="chat-submit" disabled={isSending}>
-        {isSending ? 'Sending...' : 'Send'}
+        {isSending ? 'Send' : 'Send'}
       </button>
     </form>
   );

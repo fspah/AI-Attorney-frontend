@@ -1,79 +1,78 @@
 .upload-container {
-    padding: 10px;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--bg-color);
-    border: 1px solid var(--light-grey);
-    border-radius: 5px;
-    max-width: 600px;
-    margin: auto;
-  }
-  
-  .upload-form {
-    display: flex;
-    flex-direction: column;
-    max-width: 300px;
-  }
-  
-  .upload-file-section {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-  }
-  
-  .file-label {
-    display: inline-block;
-    padding: 10px 20px;
-    background: var(--primary-color);
-    color: #fff;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-top: 10px;
-  }
-  .file-label:hover {
-    background: #0056b3;
-  }
-  
-  .file-label input[type="file"] {
-    position: absolute;
-    left: -9999px; /* This will hide the input field off-screen */
-  }
-  
-  .selected-file {
-    margin-top: 10px;
-    font-size: 14px;
-    color: var(--text-color);
-  }
-  
-  .upload-button {
-    margin: 20px 0;
-    padding: 10px;
-    background: var(--primary-color);
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
+  padding: 10px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-color);
+  border: 1px solid var(--light-grey);
+  border-radius: 5px;
+  max-width: 600px;
+  margin: auto;
+}
 
-  .upload-button:hover {
-    background: #0056b3;
-  }
-  
-  .upload-progress {
-    text-align: center;
-    margin-top: 10px;
-    color: #999;
-  }
-  
-  .upload-progress progress {
-    width: 100%;
-    appearance: none;
-    height: 50px;
-    color: var(--primary-color);
-  }
-  
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+}
+
+.upload-file-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.file-label {
+  display: inline-block;
+  padding: 10px 20px;
+  background: var(--primary-color);
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.file-label:hover {
+  background: #0056b3;
+}
+
+.file-label input[type="file"] {
+  position: absolute;
+  left: -9999px; /* This will hide the input field off-screen */
+}
+
+.selected-file {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.upload-button {
+  margin: 20px 0;
+  padding: 10px;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.upload-button:hover {
+  background: #0056b3;
+}
+
+.upload-progress {
+  text-align: center;
+  margin-top: 10px;
+  color: #999;
+}
+
+.upload-progress progress {
+  width: 100%;
+  appearance: none;
+  height: 50px;
+  color: var(--primary-color);
+}

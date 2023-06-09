@@ -55,13 +55,15 @@ body {
 }
 
 .chat-input {
-  flex-grow: 1;
+  flex: 9;  
   padding: 10px;
   border: 1px solid var(--light-grey);
   border-radius: 5px;
+  margin-right: 4px; 
 }
 
 .chat-submit {
+  flex: 1;
   padding: 10px 20px;
   border: none;
   background: var(--primary-color);
@@ -70,6 +72,10 @@ body {
   margin-left: 10px;
   border-radius: 5px;
   transition: background-color 0.3s ease;
+  text-align: center; /* Center the text */
+  white-space: nowrap; /* Prevents the button text from breaking into multiple lines */
+  overflow: hidden; /* Keeps the content from spilling out if the size is too small */
+  text-overflow: ellipsis; 
 }
 
 .chat-submit:hover {
@@ -163,6 +169,17 @@ body {
   }
 }
 
+@media screen and (max-width: 480px) {
+
+  .chat-input, .chat-submit {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .chat-submit {
+    margin-left: 0;
+  }
+}
 
 @media screen and (max-width: 768px) {
   .chat-container {
