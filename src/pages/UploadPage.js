@@ -139,27 +139,25 @@ function UploadPage() {
         </div>
       )}
       {filename && uploadStatus && !isLoading && (
-        <div className="chat-container">
-          <div className="chat-box" ref={chatBoxRef}>
-            {chatHistory.map((chat, index) => (
-          // eslint-disable-next-line
-          <div className={`chat-message ${chat.role}`} key={`${chat.role}-${index}`}>
-            {chat.content}
-          </div>
-            ))}
-          </div>
-          <form className="chat-input-form" onSubmit={handleFormSubmit}>
+      <div className="chat-container">
+        <div className="chat-box" ref={chatBoxRef}>
+          {chatHistory.map((chat, index) => (
+            /* eslint-disable-next-line react/no-array-index-key */
+            <div className={`chat-message ${chat.role}`} key={`${chat.role}-${index}`}>
+              {chat.content}
+            </div>
+          ))}
+          {isSending && <Spinner />}
+        </div>
+        <form className="chat-input-form" onSubmit={handleFormSubmit}>
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             <input className="chat-input" type="text" value={message} onChange={handleMessageChange} required style={{ fontSize: '18px' }} />
             <input className="chat-submit" type="submit" value="Send" disabled={isSending} />
-            {isSending && (
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Spinner />
-              <p>Processing...</p>
-            </div>
-            )}
-          </form>
-        </div>
+          </div>
+        </form>
+      </div>
       )}
+
     </div>
   );
 }

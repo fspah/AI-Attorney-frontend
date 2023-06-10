@@ -1,3 +1,4 @@
+
 .upload-container {
   padding: 10px;
   height: 100vh;
@@ -75,4 +76,43 @@
   appearance: none;
   height: 50px;
   color: var(--primary-color);
+}
+.chat-container {
+  width: 80%;  /* adjust as needed */
+  max-width: 600px; /* adjust as needed */
+  /* rest of your styles */
+}
+
+.chat-input-form > div {
+  flex: 1;
+}
+.chat-input {
+  flex: 9;  
+  padding: 10px;
+  border: 1px solid var(--light-grey);
+  border-radius: 5px;
+  margin-right: 4px; 
+}
+
+.chat-box {
+  position: relative;  
+}
+
+.spinner {
+  margin: 100px auto;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  text-align: center;
+
+  -webkit-animation: sk-rotate 2.0s infinite linear;
+  animation: sk-rotate 2.0s infinite linear;
+}
+
+@media screen and (max-width: 600px) {
+  .chat-submit {
+    padding: 10px;
+    font-size: 16px;
+    min-width: 60px; 
+  }
 }
