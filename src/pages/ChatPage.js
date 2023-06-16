@@ -104,6 +104,14 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#fffbe6',
     color: '#874d00',
   },
+  title: {
+    color: '#3f51b5', // Choose a color that suits your theme
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(2),
+    letterSpacing: '0.1em',
+  },
 }));
 
 function ChatPage() {
@@ -162,7 +170,12 @@ function ChatPage() {
       <Grid item xs={12} sm={8} md={6}>
         <Box mb={2}>
           <Typography variant="h5" align="center">
-            Chat with an AI Attorney
+            <Box mb={2}>
+              <Typography variant="h5" align="center" className={classes.title}>
+                Chat with an AI Attorney
+              </Typography>
+            </Box>
+
           </Typography>
         </Box>
         <Card className={classes.chatCard}>
