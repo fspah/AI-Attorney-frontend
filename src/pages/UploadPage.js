@@ -210,7 +210,9 @@ function UploadPage() {
               Uploading... This may take several minutes depending on the
               document size.
             </Typography>
-            <CircularProgress variant="determinate" value={progress} />
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <CircularProgress variant="determinate" value={progress} />
+            </div>
           </Box>
         )}
 
