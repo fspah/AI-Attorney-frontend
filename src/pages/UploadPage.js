@@ -1,17 +1,74 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import './UploadPage.css';
+import { makeStyles } from '@material-ui/core/styles';
+import {
+  TextField, Button, CircularProgress, Typography, Box, Grid, Card, CardContent,
+} from '@material-ui/core';
+import SendIcon from '@material-ui/icons/Send';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
 
-function Spinner() {
-  return (
-    <div className="spinner">
-      <div className="double-bounce1" />
-      <div className="double-bounce2" />
-    </div>
-  );
-}
+const useStyles = makeStyles((theme) => ({
+  uploadContainer: {
+    marginTop: theme.spacing(2),
+    padding: theme.spacing(2),
+    borderRadius: '15px',
+    backgroundColor: '#ffffff',
+    boxShadow: '0 0 20px 0 rgba(0,0,0,0.12)',
+  },
+  uploadForm: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginBottom: theme.spacing(2),
+  },
+  uploadButton: {
+    color: '#ffffff',
+    backgroundColor: '#3f51b5',
+    '&:hover': {
+      backgroundColor: '#5c73f2',
+    },
+  },
+  uploadProgress: {
+    marginTop: theme.spacing(2),
+  },
+  chatContainer: {
+    backgroundColor: '#f0f0f0',
+    borderRadius: 15,
+    padding: theme.spacing(2),
+    marginTop: theme.spacing(2),
+  },
+  chatMessage: {
+    marginBottom: theme.spacing(1),
+  },
+  chatInputForm: {
+    display: 'flex',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+    borderRadius: '15px',
+    padding: '0.5rem',
+    boxShadow: '0 0 10px 0 rgba(0,0,0,0.12)',
+  },
+  chatInput: {
+    flex: 1,
+    marginRight: theme.spacing(2),
+  },
+  chatSubmit: {
+    color: '#ffffff',
+    backgroundColor: '#3f51b5',
+    '&:hover': {
+      backgroundColor: '#5c73f2',
+    },
+  },
+  title: {
+    color: '#3f51b5',
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+    marginBottom: theme.spacing(2),
+    letterSpacing: '0.1em',
+  },
+}));
 
 function UploadPage() {
+  const classes = useStyles();
   const [file, setFile] = useState(null);
   const [filename, setFilename] = useState('');
   const [fileSizeKb, setFileSizeKb] = useState(0);
@@ -114,51 +171,85 @@ function UploadPage() {
   };
 
   return (
-    <div className="upload-container">
-      <h1>AI ATTORNEY</h1>
-      <form onSubmit={handleFileUpload} className="upload-form">
-        <div className="upload-file-section">
-          <span>PDF:</span>
-          <label htmlFor="file" className="file-label">
-            Browse File...
-            <input type="file" onChange={handleFileChange} id="file" />
-          </label>
-          {filename && (
-          <div className="selected-file">
-            Selected file:
-            {filename}
-          </div>
-          )}
-        </div>
-        <input type="submit" value="Upload" disabled={!file} className="upload-button" />
-      </form>
-      {isLoading && (
-        <div className="upload-progress">
-          <p>Uploading... This may take several minutes depending on the document size.</p>
-          <progress value={progress} max="100" />
-        </div>
-      )}
-      {filename && uploadStatus && !isLoading && (
-      <div className="chat-container">
-        <div className="chat-box" ref={chatBoxRef}>
-          {chatHistory.map((chat, index) => (
-            /* eslint-disable-next-line react/no-array-index-key */
-            <div className={`chat-message ${chat.role}`} key={`${chat.role}-${index}`}>
-              {chat.content}
-            </div>
-          ))}
-          {isSending && <Spinner />}
-        </div>
-        <form className="chat-input-form" onSubmit={handleFormSubmit}>
-          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-            <input className="chat-input" type="text" value={message} onChange={handleMessageChange} required style={{ fontSize: '18px' }} />
-            <input className="chat-submit" type="submit" value="Send" disabled={isSending} />
-          </div>
-        </form>
-      </div>
-      )}
+    <Grid container justifyContent="center">
+      <Grid item xs={12} sm={8} md={6} lg={4} className={classes.uploadContainer}>
+        <Typography variant="h4" align="center" className={classes.title}>AI Attorney</Typography>
 
-    </div>
+        <form onSubmit={handleFileUpload} className={classes.uploadForm}>
+          <Button
+            variant="contained"
+            component="label"
+            className={classes.uploadButton}
+            startIcon={<AttachFileIcon />}
+          >
+            Choose a PDF file
+            <input type="file" hidden onChange={handleFileChange} />
+          </Button>
+          {filename && (
+            <Typography variant="subtitle1" align="center" style={{ marginTop: 16 }}>
+              Selected file:
+              {' '}
+              {filename}
+            </Typography>
+          )}
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.uploadButton}
+            startIcon={<SendIcon />}
+            disabled={!file}
+          >
+            Upload
+          </Button>
+        </form>
+
+        {isLoading && (
+          <Box className={classes.uploadProgress}>
+            <Typography>
+              Uploading... This may take several minutes depending on the
+              document size.
+            </Typography>
+            <CircularProgress variant="determinate" value={progress} />
+          </Box>
+        )}
+
+        {filename && uploadStatus && !isLoading && (
+          <Card className={classes.chatContainer} elevation={4}>
+            <CardContent ref={chatBoxRef}>
+              {chatHistory.map((chat, index) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <Typography key={index} className={classes.chatMessage}>
+                  <b>{chat.role === 'user' ? 'You: ' : 'Assistant: '}</b>
+                  {chat.content}
+                </Typography>
+              ))}
+              {isSending && <CircularProgress />}
+            </CardContent>
+            <form className={classes.chatInputForm} onSubmit={handleFormSubmit}>
+              <TextField
+                className={classes.chatInput}
+                variant="outlined"
+                placeholder="Type a message..."
+                value={message}
+                onChange={handleMessageChange}
+                required
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                className={classes.chatSubmit}
+                startIcon={<SendIcon />}
+                disabled={isSending}
+              >
+                Send
+              </Button>
+            </form>
+          </Card>
+        )}
+      </Grid>
+    </Grid>
   );
 }
 
