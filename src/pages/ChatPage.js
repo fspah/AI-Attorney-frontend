@@ -9,15 +9,6 @@ import {
 } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 
-/* function Spinner() {
-  return (
-    <div className="spinner">
-      <div className="double-bounce1" />
-      <div className="double-bounce2" />
-    </div>
-  );
-} */
-
 function ChatMessage({ message }) {
   const isUser = message.role === 'user';
   const messageClass = isUser ? 'chat-message-user' : 'chat-message-assistant';
@@ -54,19 +45,6 @@ ChatInput.propTypes = {
   isSending: PropTypes.bool.isRequired,
   onFormSubmit: PropTypes.func.isRequired,
 };
-
-function DocumentUploadLink() {
-  return (
-    <Link
-      to="/upload"
-      className="upload-link"
-      onMouseOver={(e) => { e.target.style.backgroundColor = '#0056b3'; }}
-      onMouseOut={(e) => { e.target.style.backgroundColor = '#007BFF'; }}
-    >
-      Ask questions about a legal document with an AI Attorney
-    </Link>
-  );
-}
 
 const useStyles = makeStyles((theme) => ({
   chatContainer: {
@@ -112,7 +90,34 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     letterSpacing: '0.1em',
   },
+  uploadLink: {
+    color: '#ffffff', // Choose a color for your button's text
+    backgroundColor: '#3f51b5', // Choose a color for your button's background
+    padding: theme.spacing(1),
+    borderRadius: theme.spacing(1),
+    textDecoration: 'none', // This removes the underline of the Link
+    textAlign: 'center',
+    display: 'inline-block',
+    marginTop: theme.spacing(2),
+    transition: 'all 0.3s ease-in-out',
+    '&:hover': {
+      backgroundColor: '#0056b3', // Choose a color for your button's hover state
+    },
+  },
 }));
+
+function DocumentUploadLink() {
+  const classes = useStyles();
+
+  return (
+    <Link
+      to="/upload"
+      className={classes.uploadLink}
+    >
+      Ask questions about a legal document with an AI Attorney
+    </Link>
+  );
+}
 
 function ChatPage() {
   const classes = useStyles();
