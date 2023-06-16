@@ -49,25 +49,41 @@ ChatInput.propTypes = {
 const useStyles = makeStyles((theme) => ({
   chatContainer: {
     marginTop: theme.spacing(2),
+    padding: theme.spacing(2),
+    borderRadius: '15px',
+    backgroundColor: '#ffffff',
+    boxShadow: '0 0 20px 0 rgba(0,0,0,0.12)',
   },
   chatCard: {
     height: '70vh',
     overflowY: 'auto',
     marginBottom: theme.spacing(2),
-    backgroundColor: '#f3f8fb',
-    border: '1px solid #e0e0e0',
+    backgroundColor: '#f0f0f0',
+    border: 'none',
     borderRadius: 15,
+    padding: theme.spacing(2),
   },
   chatInputForm: {
     display: 'flex',
-    alignItems: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+    borderRadius: '15px',
+    padding: '0.5rem',
+    boxShadow: '0 0 10px 0 rgba(0,0,0,0.12)',
   },
   chatInput: {
     flex: 1,
     marginRight: theme.spacing(2),
+    backgroundColor: '#ffffff',
+    border: 'none',
   },
   sendButton: {
     padding: theme.spacing(1),
+    color: '#ffffff',
+    backgroundColor: '#3f51b5',
+    '&:hover': {
+      backgroundColor: '#5c73f2',
+    },
   },
   messageCard: {
     marginBottom: theme.spacing(2),
@@ -77,31 +93,34 @@ const useStyles = makeStyles((theme) => ({
   userMessage: {
     backgroundColor: '#e6f7ff',
     color: '#08979c',
+    alignSelf: 'flex-end',
+    order: 1,
   },
   assistantMessage: {
     backgroundColor: '#fffbe6',
     color: '#874d00',
+    alignSelf: 'flex-start',
+    order: 2,
   },
   title: {
-    color: '#3f51b5', // Choose a color that suits your theme
+    color: '#3f51b5',
     textTransform: 'uppercase',
     fontWeight: 'bold',
     marginBottom: theme.spacing(2),
-    marginTop: theme.spacing(2),
     letterSpacing: '0.1em',
   },
   uploadLink: {
-    color: '#ffffff', // Choose a color for your button's text
-    backgroundColor: '#3f51b5', // Choose a color for your button's background
+    color: '#ffffff',
+    backgroundColor: '#3f51b5',
     padding: theme.spacing(1),
     borderRadius: theme.spacing(1),
-    textDecoration: 'none', // This removes the underline of the Link
+    textDecoration: 'none',
     textAlign: 'center',
     display: 'inline-block',
     marginTop: theme.spacing(2),
     transition: 'all 0.3s ease-in-out',
     '&:hover': {
-      backgroundColor: '#0056b3', // Choose a color for your button's hover state
+      backgroundColor: '#5c73f2',
     },
   },
 }));
