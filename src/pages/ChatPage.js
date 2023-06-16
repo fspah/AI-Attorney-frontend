@@ -3,15 +3,20 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './ChatPage.css';
+import { makeStyles } from '@material-ui/core/styles';
+import {
+  TextField, Button, CircularProgress, Paper, Typography,
+} from '@material-ui/core';
+import SendIcon from '@material-ui/icons/Send';
 
-function Spinner() {
+/* function Spinner() {
   return (
     <div className="spinner">
       <div className="double-bounce1" />
       <div className="double-bounce2" />
     </div>
   );
-}
+} */
 
 function ChatMessage({ message }) {
   const isUser = message.role === 'user';
@@ -63,7 +68,36 @@ function DocumentUploadLink() {
   );
 }
 
+const useStyles = makeStyles((theme) => ({
+  chatContainer: {
+    padding: theme.spacing(2),
+  },
+  chatBox: {
+    height: 400,
+    overflowY: 'auto',
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    backgroundColor: '#fff',
+    boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)',
+  },
+  chatInputForm: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  chatInput: {
+    flex: 1,
+    marginRight: theme.spacing(2),
+  },
+  sendButton: {
+    padding: theme.spacing(1),
+  },
+  spinner: {
+    textAlign: 'center',
+  },
+}));
+
 function ChatPage() {
+  const classes = useStyles();
   const [message, setMessage] = useState('');
   const [chatHistory, setChatHistory] = useState([]);
   const [chatHistoryForServer, setChatHistoryForServer] = useState([]);
@@ -114,25 +148,36 @@ function ChatPage() {
   };
 
   return (
-    <div className="chat-container">
-      <h1>Chat with an AI Attorney</h1>
-      <div className="chat-box" ref={chatBoxRef}>
+    <Paper className={classes.chatContainer}>
+      <Typography variant="h5">Chat with an AI Attorney</Typography>
+      <Paper className={classes.chatBox} ref={chatBoxRef}>
         {errorr && <p className="error-message">{errorr}</p>}
         {chatHistory.map((chat) => (
           <ChatMessage key={`${chat.role}-${chat.content}`} message={chat} />
         ))}
-        {isSending && <Spinner />}
-        {' '}
-        {/* Now the spinner will be displayed when isSending is true */}
-      </div>
-      <ChatInput
-        onMessageChange={handleMessageChange}
-        message={message}
-        isSending={isSending}
-        onFormSubmit={handleFormSubmit}
-      />
+        {isSending && <CircularProgress className={classes.spinner} />}
+      </Paper>
+      <form className={classes.chatInputForm} onSubmit={handleFormSubmit}>
+        <TextField
+          className={classes.chatInput}
+          type="text"
+          value={message}
+          onChange={handleMessageChange}
+          required
+        />
+        <Button
+          className={classes.sendButton}
+          variant="contained"
+          color="primary"
+          type="submit"
+          disabled={isSending}
+          endIcon={<SendIcon />}
+        >
+          Send
+        </Button>
+      </form>
       <DocumentUploadLink />
-    </div>
+    </Paper>
   );
 }
 
