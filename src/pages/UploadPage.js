@@ -219,6 +219,7 @@ function UploadPage() {
         )}
 
         {filename && uploadStatus && !isLoading && (
+        <>
           <Card className={classes.chatContainer} elevation={4}>
             <CardContent ref={chatBoxRef}>
               {chatHistory.map((chat, index) => (
@@ -230,27 +231,28 @@ function UploadPage() {
               ))}
               {isSending && <CircularProgress />}
             </CardContent>
-            <form className={classes.chatInputForm} onSubmit={handleFormSubmit}>
-              <TextField
-                className={classes.chatInput}
-                variant="outlined"
-                placeholder="Type a message..."
-                value={message}
-                onChange={handleMessageChange}
-                required
-              />
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                className={classes.chatSubmit}
-                startIcon={<SendIcon />}
-                disabled={isSending}
-              >
-                Send
-              </Button>
-            </form>
           </Card>
+          <form className={classes.chatInputForm} onSubmit={handleFormSubmit}>
+            <TextField
+              className={classes.chatInput}
+              variant="outlined"
+              placeholder="Type a message..."
+              value={message}
+              onChange={handleMessageChange}
+              required
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.chatSubmit}
+              startIcon={<SendIcon />}
+              disabled={isSending}
+            >
+              Send
+            </Button>
+          </form>
+        </>
         )}
       </Grid>
     </Grid>
