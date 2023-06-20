@@ -87,6 +87,8 @@ function UploadPage() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const lastMessageRef = useRef(null);
   const [errorr, setError] = useState(null);
+  const [fileUploading, setFileUploading] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState(null);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -100,6 +102,7 @@ function UploadPage() {
     event.preventDefault();
     setIsLoading(true);
     setUploadStatus(false);
+    setFileUploading(true);
 
     let interval;
     if (file) { // Only setup the progress interval when there's a file
@@ -129,6 +132,7 @@ function UploadPage() {
         setChatHistory([]);
         setChatHistoryForServer([]);
         setSnackbarOpen(true);
+        setUploadedFile(file);
       } catch (error) {
         setError('Oops! Something went wrong, please try again.');
         console.error(error);
@@ -136,6 +140,7 @@ function UploadPage() {
         clearInterval(interval);
       }
     }
+    setFileUploading(false);
   };
   const scrollToBottom = () => {
     if (lastMessageRef.current) {
@@ -198,6 +203,7 @@ function UploadPage() {
             component="label"
             className={classes.uploadButton}
             startIcon={<AttachFileIcon />}
+            disabled={fileUploading}
           >
             Choose a PDF file
             <input type="file" hidden onChange={handleFileChange} />
@@ -215,7 +221,7 @@ function UploadPage() {
             color="primary"
             className={classes.uploadButton}
             startIcon={<SendIcon />}
-            disabled={!file}
+            disabled={file === uploadedFile || !file || fileUploading}
           >
             Upload
           </Button>
