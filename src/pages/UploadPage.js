@@ -11,7 +11,6 @@ import AttachFileIcon from '@material-ui/icons/AttachFile';
 
 const useStyles = makeStyles((theme) => ({
   uploadContainer: {
-    width: '80%',
     marginTop: theme.spacing(2),
     padding: theme.spacing(2),
     borderRadius: '15px',
