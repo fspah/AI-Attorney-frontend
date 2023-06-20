@@ -126,6 +126,8 @@ function UploadPage() {
         setIsLoading(false);
         clearInterval(interval);
         setUploadStatus(true);
+        setChatHistory([]);
+        setChatHistoryForServer([]);
         setSnackbarOpen(true);
       } catch (error) {
         setError('Oops! Something went wrong, please try again.');
