@@ -85,6 +85,8 @@ function UploadPage() {
   const chatBoxRef = useRef(null);
   const [uploadStatus, setUploadStatus] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const lastMessageRef = useRef(null);
+  const [errorr, setError] = useState(null);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -126,21 +128,21 @@ function UploadPage() {
         setUploadStatus(true);
         setSnackbarOpen(true);
       } catch (error) {
+        setError('Oops! Something went wrong, please try again.');
         console.error(error);
         setIsLoading(false);
         clearInterval(interval);
       }
     }
   };
+  const scrollToBottom = () => {
+    if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   useEffect(() => {
-    // The initial system message
-    /*     const systemMessage = {
-      role: 'user',
-      content: 'You are an expert attorney.
-        Use the following pieces of context to answer the message at the end. ',
-    };
-    setChatHistoryForServer([systemMessage]);
- */
+    scrollToBottom();
     if (chatBoxRef.current) {
       chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
     }
@@ -232,10 +234,15 @@ function UploadPage() {
         {filename && uploadStatus && !isLoading && (
         <>
           <Card className={classes.chatContainer} elevation={4}>
+            {errorr && <p className="error-message">{errorr}</p>}
             <CardContent ref={chatBoxRef}>
               {chatHistory.map((chat, index) => (
+                <Typography
                 // eslint-disable-next-line react/no-array-index-key
-                <Typography key={index} className={classes.chatMessage}>
+                  key={index}
+                  className={classes.chatMessage}
+                  ref={index === chatHistory.length - 1 ? lastMessageRef : null}
+                >
                   <b>{chat.role === 'user' ? 'You: ' : 'Assistant: '}</b>
                   {chat.content}
                 </Typography>

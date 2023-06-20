@@ -202,7 +202,7 @@ function ChatPage() {
 
           </Typography>
         </Box>
-        <Card className={classes.chatCard}>
+        <Card className={classes.chatCard} ref={chatBoxRef}>
           {errorr && <p className="error-message">{errorr}</p>}
           {chatHistory.map((chat, i) => (
             <CardContent
