@@ -11,6 +11,7 @@ import AttachFileIcon from '@material-ui/icons/AttachFile';
 
 const useStyles = makeStyles((theme) => ({
   uploadContainer: {
+    width: '80%',
     marginTop: theme.spacing(2),
     padding: theme.spacing(2),
     borderRadius: '15px',
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   chatContainer: {
-    height: '50vh', // 50% of viewport height
+    height: '60vh', // 50% of viewport height
     overflowY: 'scroll',
     backgroundColor: '#f0f0f0',
     borderRadius: 15,
