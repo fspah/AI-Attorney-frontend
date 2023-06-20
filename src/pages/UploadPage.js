@@ -209,11 +209,11 @@ function UploadPage() {
             <input type="file" hidden onChange={handleFileChange} />
           </Button>
           {filename && (
-            <Typography variant="subtitle1" align="center" style={{ marginTop: 16 }}>
-              Selected file:
+          <Typography variant="subtitle1" align="center" style={{ color: '#3f51b5' }}>
+            Selected file:
               {' '}
-              {filename}
-            </Typography>
+            {filename}
+          </Typography>
           )}
           <Button
             type="submit"
@@ -229,7 +229,7 @@ function UploadPage() {
 
         {isLoading && (
           <Box className={classes.uploadProgress}>
-            <Typography>
+            <Typography variant="subtitle1" align="center" style={{ color: '#3f51b5' }}>
               Uploading... This may take several minutes depending on the
               document size.
             </Typography>
