@@ -3,7 +3,9 @@ import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   TextField, Button, CircularProgress, Typography, Box, Grid, Card, CardContent,
+  Snackbar,
 } from '@material-ui/core';
+import Alert from '@mui/lab/Alert';
 import SendIcon from '@material-ui/icons/Send';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 
@@ -82,6 +84,7 @@ function UploadPage() {
   const [isSending, setIsSending] = useState(false);
   const chatBoxRef = useRef(null);
   const [uploadStatus, setUploadStatus] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -121,6 +124,7 @@ function UploadPage() {
         setIsLoading(false);
         clearInterval(interval);
         setUploadStatus(true);
+        setSnackbarOpen(true);
       } catch (error) {
         console.error(error);
         setIsLoading(false);
@@ -170,6 +174,13 @@ function UploadPage() {
     }
 
     setIsSending(false);
+  };
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSnackbarOpen(false);
   };
 
   return (
@@ -254,6 +265,12 @@ function UploadPage() {
           </form>
         </>
         )}
+        <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
+          <Alert onClose={handleSnackbarClose} severity="success">
+            File uploaded successfully!
+          </Alert>
+        </Snackbar>
+
       </Grid>
     </Grid>
   );
