@@ -212,8 +212,8 @@ function UploadPage() {
           {filename && (
           <Typography variant="subtitle1" align="center" style={{ color: '#3f51b5' }}>
             Selected file:
-              {' '}
-            {filename}
+            {' '}
+            <strong>{filename}</strong>
           </Typography>
           )}
           <Button
@@ -231,7 +231,9 @@ function UploadPage() {
         {isLoading && (
           <Box className={classes.uploadProgress}>
             <Typography variant="subtitle1" align="center" style={{ color: '#3f51b5' }}>
-              Uploading... This may take several minutes depending on the
+              <strong>Uploading...</strong>
+              {' '}
+              This may take several minutes depending on the
               document size.
             </Typography>
             <div style={{ display: 'flex', justifyContent: 'center' }}>

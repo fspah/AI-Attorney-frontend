@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '0 0 20px 0 rgba(0,0,0,0.12)',
   },
   chatCard: {
-    height: '60vh',
+    height: '55vh',
     overflowY: 'auto',
     marginBottom: theme.spacing(2),
     backgroundColor: '#f0f0f0',
