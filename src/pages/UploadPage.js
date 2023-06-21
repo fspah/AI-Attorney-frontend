@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   chatContainer: {
-    height: '60vh', // 50% of viewport height
+    height: '55vh', // 50% of viewport height
     overflowY: 'scroll',
     backgroundColor: '#f0f0f0',
     borderRadius: 15,
@@ -194,7 +194,7 @@ function UploadPage() {
 
   return (
     <Grid container justifyContent="center">
-      <Grid item xs={12} sm={8} md={6} lg={4} className={classes.uploadContainer}>
+      <Grid item xs={12} sm={8} md={6} lg={6} className={classes.uploadContainer}>
         <Typography variant="h4" align="center" className={classes.title}>AI Attorney</Typography>
 
         <form onSubmit={handleFileUpload} className={classes.uploadForm}>
