@@ -47,6 +47,7 @@ ChatInput.propTypes = {
 
 const useStyles = makeStyles((theme) => ({
   chatContainer: {
+    height: '100vh',
     marginTop: theme.spacing(2),
     padding: theme.spacing(2),
     borderRadius: '15px',
