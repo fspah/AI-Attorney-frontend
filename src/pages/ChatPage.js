@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import './ChatPage.css';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   TextField, Button, CircularProgress, Typography, Box, Grid, Card, CardContent,
