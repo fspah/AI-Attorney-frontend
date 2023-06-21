@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   chatContainer: {
-    height: '50vh', // 50% of viewport height
+    height: '48vh', // 50% of viewport height
     overflowY: 'scroll',
     backgroundColor: '#f0f0f0',
     borderRadius: 15,
