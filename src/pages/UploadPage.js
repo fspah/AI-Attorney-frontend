@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '15px',
     padding: '0.5rem',
     boxShadow: '0 0 10px 0 rgba(0,0,0,0.12)',
+    marginTop: theme.spacing(2),
   },
   chatInput: {
     flex: 1,
