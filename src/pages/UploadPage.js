@@ -180,7 +180,7 @@ function UploadPage() {
       setChatHistoryForServer((oldChatHistory) => [...oldChatHistory, assistantMessage]);
       setMessage('');
     } catch (error) {
-      // Handle error
+      setError('Oops! Something went wrong, please try again.');
     }
 
     setIsSending(false);
